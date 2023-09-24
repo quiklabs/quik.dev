@@ -1,0 +1,7 @@
+{
+  "name": "quik.dev",
+  "version": "0.0.1",
+  "description": "Visual editor to make web development quicker",
+  "main": "index.js",
+  "license": "MIT"
+}
