@@ -64,7 +64,7 @@ const useStartup = (
         }
       }
     // Open blank file (if no URL)
-    } else if (location.pathname === '/') {
+    } else if (window.location.pathname === '/') {
       panels.openUntitledFile(fs, api, collab);
     }
     initLaunch.current = true;

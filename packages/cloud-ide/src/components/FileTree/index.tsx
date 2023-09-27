@@ -1,6 +1,5 @@
 import { useRef, Ref } from 'react';
 import { Tree, UncontrolledTreeEnvironment, TreeEnvironmentRef } from 'react-complex-tree';
-import { EventEmitter } from 'react-complex-tree/src/EventEmitter';
 import { getDirAsTree } from '../../libs/webcontainer';
 import { debounce } from '../../libs/debounce';
 
@@ -75,7 +74,6 @@ export function FileTree(props: FileTreeProps) {
 
 class TreeProvider<T = any> implements RCT.TreeDataProvider {
   private data: RCT.ExplicitDataSource;
-  private onDidChangeTreeDataEmitter = new EventEmitter<RCT.TreeItemIndex[]>();
 
   constructor(items: Record<RCT.TreeItemIndex, RCT.TreeItem<T>>) {
     console.log('TreeProvider constructor', items);
@@ -85,17 +83,10 @@ class TreeProvider<T = any> implements RCT.TreeDataProvider {
   public async updateItems(items: Record<RCT.TreeItemIndex, RCT.TreeItem<T>>) {
     console.log('updateItems items', items)
     this.data = {items};
-    this.onDidChangeTreeDataEmitter.emit(Object.keys(items));
   }
 
   public async getTreeItem(itemId: RCT.TreeItemIndex): Promise<RCT.TreeItem> {
     console.log('getTreeItem', itemId, this.data.items[itemId]);
     return this.data.items[itemId];
-  }
-  
-  public onDidChangeTreeData(listener: (changedItemIds: RCT.TreeItemIndex[]) => void): RCT.Disposable {
-    console.log('onDidChangeTreeData items', this.data.items);
-    const handlerId = this.onDidChangeTreeDataEmitter.on(payload => listener(payload));
-    return {dispose: () => this.onDidChangeTreeDataEmitter.off(handlerId)};
   }
 }

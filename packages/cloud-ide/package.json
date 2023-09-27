@@ -12,8 +12,8 @@
     "dockview": "^1.8.3",
     "monaco-editor": "^0.39.0",
     "monaco-editor-auto-typings": "^0.4.4",
-    "path-browserify": "^1.0.1",
     "react": "^18.2.0",
+    "react-app-rewired": "^2.2.1",
     "react-complex-tree": "^2.2.2",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.16.0",
@@ -32,12 +32,13 @@
     "@types/react": "^18.2.23",
     "@types/react-dom": "^18.2.8",
     "@types/react-router-dom": "^5.3.3",
-    "@types/styled-components": "^5.1.28"
+    "@types/styled-components": "^5.1.28",
+    "path-browserify": "^1.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

@@ -23,7 +23,7 @@ const useCollab = (shell: ShellInstance): CollabInstance => {
     if (init.current) return;
     if (shell && shell.container?.fs) {
       init.current = true;
-      const syncKey = location.hash;
+      const syncKey = window.location.hash;
       if (!syncKey) return;
       console.log('Setting up sync using key:', syncKey);
       // Import sync module & connect
