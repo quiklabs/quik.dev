@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 
-const useLaunchQueue = () => {
+export function useLaunchQueue() {
   const [action, setAction] = useState<string | null>(null);
   const [files, setFiles] = useState<FileSystemFileHandle[]>([]);
 
@@ -14,7 +14,5 @@ const useLaunchQueue = () => {
     });
   }, []);
 
-  return { action, files };
+  return {action, files};
 }
-
-export default useLaunchQueue;

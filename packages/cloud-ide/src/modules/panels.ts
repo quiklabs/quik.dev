@@ -1,7 +1,7 @@
-import type { DockviewApi, GridviewApi, PaneviewApi } from 'dockview';
-import type { FileSystemAPI } from '@webcontainer/api';
-import type { ShellInstance } from '../hooks/useShell';
-import type { CollabInstance } from '../hooks/useCollab';
+import type {DockviewApi, GridviewApi, PaneviewApi} from 'dockview';
+import type {FileSystemAPI} from '@webcontainer/api';
+import type {ShellInstance} from '../hooks/useShell';
+import type {CollabInstance} from '../hooks/useCollab';
 
 export function openDock(grid: GridviewApi, api: React.MutableRefObject<DockviewApi | undefined>) {
   grid.addPanel({

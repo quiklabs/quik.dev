@@ -1,10 +1,11 @@
 import { useRef, Ref } from 'react';
 import { Tree, UncontrolledTreeEnvironment, TreeEnvironmentRef } from 'react-complex-tree';
-import { getDirAsTree } from '../../libs/webcontainer';
-import { debounce } from '../../libs/debounce';
+import { EventEmitter } from 'react-complex-tree/src/EventEmitter';
+import { getDirAsTree } from '../../../modules/webcontainer';
+import { debounce } from '../../../utils/debounce';
 
 import type * as RCT from 'react-complex-tree';
-import type { FileSystemAPI } from '@webcontainer/api';
+import type {FileSystemAPI} from '@webcontainer/api';
 
 interface FileTreeProps {
   fs: FileSystemAPI,
@@ -26,7 +27,7 @@ export const FileTreeState = {
   treeEnv: null as Ref<TreeEnvironmentRef<any, never>>
 }
 
-export function FileTree(props: FileTreeProps) {
+export const FileTree = (props: FileTreeProps) => {
   const treeEnv = useRef() as Ref<TreeEnvironmentRef<any, never>>
   const provider = useRef<TreeProvider<string>>(new TreeProvider({root}));
 
@@ -50,7 +51,6 @@ export function FileTree(props: FileTreeProps) {
 
   return (
     <div style={{ overflow: 'scroll' }}>
-      <div className={'rct-dark'}>
         <UncontrolledTreeEnvironment
           ref={treeEnv}
           canRename
@@ -67,13 +67,13 @@ export function FileTree(props: FileTreeProps) {
           viewState={{filetree: {}}}>
           <Tree treeId="filetree" treeLabel="Explorer" rootItem="root"/>
         </UncontrolledTreeEnvironment>
-      </div>
     </div>
   );
 }
 
 class TreeProvider<T = any> implements RCT.TreeDataProvider {
   private data: RCT.ExplicitDataSource;
+  private onDidChangeTreeDataEmitter = new EventEmitter<RCT.TreeItemIndex[]>();
 
   constructor(items: Record<RCT.TreeItemIndex, RCT.TreeItem<T>>) {
     console.log('TreeProvider constructor', items);
@@ -83,10 +83,17 @@ class TreeProvider<T = any> implements RCT.TreeDataProvider {
   public async updateItems(items: Record<RCT.TreeItemIndex, RCT.TreeItem<T>>) {
     console.log('updateItems items', items)
     this.data = {items};
+    this.onDidChangeTreeDataEmitter.emit(Object.keys(items));
   }
 
   public async getTreeItem(itemId: RCT.TreeItemIndex): Promise<RCT.TreeItem> {
     console.log('getTreeItem', itemId, this.data.items[itemId]);
     return this.data.items[itemId];
+  }
+  
+  public onDidChangeTreeData(listener: (changedItemIds: RCT.TreeItemIndex[]) => void): RCT.Disposable {
+    console.log('onDidChangeTreeData items', this.data.items);
+    const handlerId = this.onDidChangeTreeDataEmitter.on(payload => listener(payload));
+    return {dispose: () => this.onDidChangeTreeDataEmitter.off(handlerId)};
   }
 }

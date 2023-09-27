@@ -1,22 +1,19 @@
-import { useMonaco } from '@monaco-editor/react';
-import { useRef, useEffect, useState } from 'react';
-import useCollab from './useCollab';
-import useLaunchQueue from "./useLaunchQueue";
-import { useShell } from './useShell';
-import { openFolder } from '../libs/webcontainer';
-import * as panels from '../libs/panels';
+import {useMonaco} from '@monaco-editor/react';
+import {useRef, useEffect} from 'react';
+import {useLaunchQueue} from './useLaunchQueue';
+import {useCollab} from './useCollab';
+import {useShell} from './useShell';
+import {openFolder} from '../modules/webcontainer';
+import * as panels from '../modules/panels';
 
-import type { DockviewApi, GridviewApi, PaneviewApi } from 'dockview';
+import type {MutableRefObject} from 'react';
+import type {DockviewApi, GridviewApi, PaneviewApi} from 'dockview';
 
-import type { MutableRefObject } from 'react';
-const useStartup = (
+export function useStartup(
   grid: MutableRefObject<GridviewApi | undefined>,
   dock: MutableRefObject<DockviewApi | undefined>,
   panes: MutableRefObject<PaneviewApi | undefined>,
-) => {
-
-  const [loading, setLoading] = useState(false);
-
+) {
   const shell = useShell();
   const monaco = useMonaco();
   const collab = useCollab(shell);
@@ -64,16 +61,9 @@ const useStartup = (
         }
       }
     // Open blank file (if no URL)
-    } else if (window.location.pathname === '/') {
+    } else if (location.pathname === '/') {
       panels.openUntitledFile(fs, api, collab);
     }
     initLaunch.current = true;
   }, [monaco, launch, shell]);
-
-
-  return {
-    loading
-  }
 }
-
-export default useStartup;

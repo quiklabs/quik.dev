@@ -2,11 +2,11 @@ import {useState, useCallback, useEffect} from 'react';
 import {WebContainer} from '@webcontainer/api';
 import {Terminal} from 'xterm';
 import {FitAddon} from 'xterm-addon-fit';
-import { FileTreeState } from '../components/FileTree';
-import { startFiles, jshRC } from '../libs/webcontainer';
+import {FileTreeState} from '../components/Playground/FileTree';
+import {startFiles, jshRC} from '../modules/webcontainer';
 
-import type { WebContainerProcess } from '@webcontainer/api';
-import type { GridviewPanelApi } from 'dockview';
+import type {WebContainerProcess} from '@webcontainer/api';
+import type {GridviewPanelApi} from 'dockview';
 
 export interface ShellInstance {
   container: WebContainer | null,
@@ -39,7 +39,7 @@ export function useShell(): ShellInstance {
     console.log('Booting...');
 
     // Setup shell
-    const shell = await WebContainer.boot({workdirName: 'vslite'});
+    const shell = await WebContainer.boot({workdirName: 'quiklabs'});
     await shell.fs.writeFile('.jshrc', jshRC);
     await shell.spawn('mv', ['.jshrc', '/home/.jshrc']);
     shell.mount(startFiles);
@@ -87,7 +87,7 @@ export function useShell(): ShellInstance {
     init.releaseLock();
 
     // Pipe terminal to shell and vice versa
-    terminal.onData((data: any) => {input.write(data)});
+    terminal.onData(data => {input.write(data)});
     jsh.output.pipeTo(new WritableStream({write(data) {terminal.write(data)}}));
 
     // Subscribe to events
@@ -100,8 +100,8 @@ export function useShell(): ShellInstance {
     setProcess(jsh);
 
     // Git repo (clone repo and install)
-    if (window.location.pathname.startsWith('/~/')) {
-      const repo = window.location.pathname.replace('/~/', '');
+    if (location.pathname.startsWith('/~/')) {
+      const repo = location.pathname.replace('/~/', '');
       await input.write(`git clone '${repo}' './' && ni\n`);
     }
 

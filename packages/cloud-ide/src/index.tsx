@@ -1,12 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import AppRouter from "./routes/AppRouter";
+import 'react-complex-tree/lib/style-modern.css';
+import 'dockview/dist/styles/dockview.css';
+import 'xterm/css/xterm.css';
 import './index.css';
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+import { createRoot } from 'react-dom/client';
+import AppRouter from "./routes/AppRouter";
 
-root.render(
-  <React.StrictMode>
-      <AppRouter />
-  </React.StrictMode>
-);
+
+const el = document.getElementById('root');
+
+el && createRoot(el).render(<AppRouter/>);

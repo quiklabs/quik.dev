@@ -2,7 +2,7 @@ import {WebrtcProvider} from 'y-webrtc';
 import {MonacoBinding} from 'y-monaco';
 import * as Y from 'yjs';
 
-import type { Editor } from './monaco';
+import type {Editor} from './monaco';
 
 export type Session = {
   document: Y.Doc,

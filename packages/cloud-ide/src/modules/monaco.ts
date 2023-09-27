@@ -1,4 +1,4 @@
-import { AutoTypings, LocalStorageCache } from 'monaco-editor-auto-typings/custom-editor';
+import {AutoTypings, LocalStorageCache} from 'monaco-editor-auto-typings/custom-editor';
 
 import type * as monaco from 'monaco-editor';
 import type {FileSystemAPI} from '@webcontainer/api';
@@ -16,9 +16,9 @@ export async function initEditor(editor: Editor, monaco: Monaco, fs: FileSystemA
   let contents = '';
   try { contents = await fs.readFile(path, 'utf-8')} catch (e) {}
   editor.setValue(contents);
-  // Editor syncing
+  // Index syncing
   if (sync) {
-    editor.updateOptions({ readOnly: false });
+    editor.updateOptions({readOnly: false});
     sync.syncEditor(editor);
   }
 }
