@@ -1,5 +1,4 @@
-import React from 'react';
-import {AppContainer, TopBar, SideMenu, Icon, MainContent, StatusBar, Container} from './styles';
+import { AppContainer, TopBar, SideMenu, Icon, MainContent, StatusBar, Container } from './styles';
 import { Link } from 'react-router-dom';
 
 interface LayoutProps {
@@ -14,15 +13,11 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
             </TopBar>
             <Container>
                 <SideMenu>
-                    <Link to="/">
-                        <Icon />
-                    </Link>
-                    <Link to="/search">
-                        <Icon />
-                    </Link>
-                    <Link to="/extensions">
-                        <Icon />
-                    </Link>
+                    <Icon />
+                    <Icon />
+                    <Icon />
+                    <Icon />
+                    <Icon />
                 </SideMenu>
                 <MainContent>
                     {children}

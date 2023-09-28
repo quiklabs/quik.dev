@@ -1,18 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import reportWebVitals from './reportWebVitals';
-import AppRouter from "./routes/AppRouter";
+import 'react-complex-tree/lib/style-modern.css';
+import 'dockview/dist/styles/dockview.css';
+import 'xterm/css/xterm.css';
 import './index.css';
 
-const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+import { createRoot } from 'react-dom/client';
+import AppRouter from "./routes/AppRouter";
 
-root.render(
-  <React.StrictMode>
-      <AppRouter />
-  </React.StrictMode>
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+const el = document.getElementById('root');
+
+el && createRoot(el).render(<AppRouter/>);
