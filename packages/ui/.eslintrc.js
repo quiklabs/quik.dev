@@ -16,6 +16,11 @@ module.exports = {
     project: "tsconfig.json",
   },
   plugins: ["react"],
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
   rules: {
     // react
     "react/prop-types": "off",

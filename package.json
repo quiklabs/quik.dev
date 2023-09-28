@@ -5,7 +5,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "turbo run start"
+    "start": "turbo run start",
+    "lint": "turbo run lint"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.7.3",
