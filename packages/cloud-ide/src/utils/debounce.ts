@@ -1,8 +1,9 @@
-export function debounce<T extends Function>(cb: T, wait = 150) {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export function debounce<T extends Function>(func: T, wait = 150) {
   let h: NodeJS.Timeout;
-  let callable = (...args: any) => {
+  const callable = (...args: any) => {
     clearTimeout(h);
-    h = setTimeout(() => cb(...args), wait);
+    h = setTimeout(() => func(...args), wait);
   };
-  return <T>(<any>callable);
+  return callable as any as T;
 }

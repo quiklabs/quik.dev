@@ -7,7 +7,8 @@
     "license": "MIT",
     "scripts": {
         "start": "tsc --project ./tsconfig.json --outDir ./dist --watch",
-        "build": "tsc --project ./tsconfig.json --outDir ./dist"
+        "build": "tsc --project ./tsconfig.json --outDir ./dist",
+        "lint": "eslint src/**/* --ext js,ts,tsx,jsx"
     },
     "devDependencies": {
         "@types/react": "^18.2.23",
