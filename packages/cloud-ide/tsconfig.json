@@ -1,7 +1,8 @@
 {
-  "include": ["src"],
-  "references": [{"path": "./tsconfig.node.json"}],
+  "include": ["src/**/*"],
+  "exclude": ["dist"],
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "jsx": "react-jsx"
+    "types": ["vite/client"]
   }
 }

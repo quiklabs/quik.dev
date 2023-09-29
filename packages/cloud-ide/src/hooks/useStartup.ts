@@ -1,13 +1,13 @@
-import {useMonaco} from '@monaco-editor/react';
-import {useRef, useEffect} from 'react';
-import {useLaunchQueue} from './useLaunchQueue';
-import {useCollab} from './useCollab';
-import {useShell} from './useShell';
-import {openFolder} from '../modules/webcontainer';
-import * as panels from '../modules/panels';
+import { useMonaco } from "@monaco-editor/react";
+import { useRef, useEffect } from "react";
+import { useLaunchQueue } from "./useLaunchQueue";
+import { useCollab } from "./useCollab";
+import { useShell } from "./useShell";
+import { openFolder } from "../modules/webcontainer";
+import * as panels from "../modules/panels";
 
-import type {MutableRefObject} from 'react';
-import type {DockviewApi, GridviewApi, PaneviewApi} from 'dockview';
+import type { MutableRefObject } from "react";
+import type { DockviewApi, GridviewApi, PaneviewApi } from "dockview";
 
 export function useStartup(
   grid: MutableRefObject<GridviewApi | undefined>,
@@ -37,7 +37,12 @@ export function useStartup(
     if (initFileTree.current) return;
     if (shell.container?.fs && panes.current && dock.current) {
       initFileTree.current = true;
-      panels.openFileTree(shell.container.fs, panes.current, dock.current, collab);
+      panels.openFileTree(
+        shell.container.fs,
+        panes.current,
+        dock.current,
+        collab,
+      );
     }
   }, [shell]);
 
@@ -50,18 +55,20 @@ export function useStartup(
     // Open files
     if (launch.files.length > 0) {
       // TODO: ask for containing folder access
-      launch.files.forEach(file => panels.openStartFile(file, fs, api, collab));
-    // Execute action
+      launch.files.forEach(async (file) => {
+        await panels.openStartFile(file, fs, api, collab);
+      });
+      // Execute action
     } else if (launch.action) {
       switch (launch.action) {
-        case 'open_folder': {
+        case "open_folder": {
           // TODO: trigger via a dialog due to security
           openFolder(fs, api);
           break;
         }
       }
-    // Open blank file (if no URL)
-    } else if (location.pathname === '/') {
+      // Open blank file (if no URL)
+    } else if (location.pathname === "/") {
       panels.openUntitledFile(fs, api, collab);
     }
     initLaunch.current = true;

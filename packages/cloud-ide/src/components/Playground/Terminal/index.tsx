@@ -1,16 +1,19 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect } from "react";
 
-import type { GridviewPanelApi } from 'dockview';
-import type {ShellInstance, ServerReadyHandler} from '../../../hooks/useShell';
+import type { GridviewPanelApi } from "dockview";
+import type {
+  ShellInstance,
+  ServerReadyHandler,
+} from "../../../hooks/useShell";
 
 interface TerminalProps {
-  shell: ShellInstance,
-  panelApi: GridviewPanelApi,
-  onServerReady: ServerReadyHandler,
+  shell: ShellInstance;
+  panelApi: GridviewPanelApi;
+  onServerReady: ServerReadyHandler;
 }
 
 export const Terminal = (props: TerminalProps) => {
-  const {shell} = props;
+  const { shell } = props;
   const init = useRef(false);
   const root = useRef<HTMLDivElement>(null);
 
@@ -21,7 +24,5 @@ export const Terminal = (props: TerminalProps) => {
     }
   }, [shell]);
 
-  return (
-    <div ref={root} style={{ height: '100%' }}></div>
-  );
-}
+  return <div ref={root} style={{ height: "100%" }}></div>;
+};

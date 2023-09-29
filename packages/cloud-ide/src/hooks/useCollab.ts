@@ -1,14 +1,13 @@
-import {useRef, useCallback, useEffect} from 'react';
+import { useRef, useCallback, useEffect } from "react";
 
+import type { ShellInstance } from "./useShell";
+import type { Editor } from "../modules/monaco";
+import type * as YJS from "../modules/yjs";
 
-import type {ShellInstance} from './useShell';
-import type {Editor} from '../modules/monaco';
-import type * as YJS from '../modules/yjs';
-
-export type CollabInstance = {
-  session: React.MutableRefObject<YJS.Session | null>,
-  syncEditor: (editor: Editor) => void,
-};
+export interface CollabInstance {
+  session: React.MutableRefObject<YJS.Session | null>;
+  syncEditor: (editor: Editor) => void;
+}
 
 export function useCollab(shell: ShellInstance): CollabInstance {
   const init = useRef(false);
@@ -16,25 +15,29 @@ export function useCollab(shell: ShellInstance): CollabInstance {
   const syncMonaco = useRef<typeof YJS.monaco | null>(null);
   const syncEditor = useCallback((editor: Editor) => {
     if (!session.current || !syncMonaco.current) return;
-    console.log('Index sync enabled.');
-    syncMonaco.current(editor, session.current.document, session.current.provider);
+    console.log("Index sync enabled.");
+    syncMonaco.current(
+      editor,
+      session.current.document,
+      session.current.provider,
+    );
   }, []);
 
   useEffect(() => {
     if (init.current) return;
-    if (shell && shell.container?.fs) {
+    if (shell?.container?.fs) {
       init.current = true;
       const syncKey = location.hash;
       if (!syncKey) return;
-      console.log('Setting up sync using key:', syncKey);
+      console.log("Setting up sync using key:", syncKey);
       // Import sync module & connect
-      import('../modules/yjs').then(sync => {
+      import("../modules/yjs").then((sync) => {
         session.current = sync.connect(syncKey);
         syncMonaco.current = sync.monaco;
-        console.log('Connected to sync.');
+        console.log("Connected to sync.");
       });
     }
   }, [shell]);
 
-  return {session, syncEditor};
+  return { session, syncEditor };
 }
