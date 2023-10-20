@@ -1,0 +1,83 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model Users {
+	id 						String @db.Uuid @id @default(dbgenerated("gen_random_uuid()"))
+
+	name					String
+	email					String @unique
+	password				String
+
+	workspaces				WorkspaceUsers[]
+
+	created_on				DateTime @db.Timestamptz(3) @default(dbgenerated("now()"))
+	updated_on				DateTime @db.Timestamptz(3) @default(dbgenerated("now()"))
+
+	@@map("users")
+}
+
+model Workspaces {
+	id 						String @db.Uuid @id @default(dbgenerated("gen_random_uuid()"))
+
+    name                    String
+    slug                    String @unique
+
+    users                   WorkspaceUsers[]
+    projects                WorkspaceProjects[]
+
+    created_on				DateTime @db.Timestamptz(3) @default(dbgenerated("now()"))
+	updated_on				DateTime @db.Timestamptz(3) @default(dbgenerated("now()"))
+
+	@@map("workspaces")
+}
+
+
+model WorkspaceUsers {
+	id 						String @db.Uuid @id @default(dbgenerated("gen_random_uuid()"))
+
+	workspace_id     		String @db.Uuid
+	user_id 				String @db.Uuid
+
+	workspace       		Workspaces @relation(fields: [workspace_id], references: [id])
+	user   					Users @relation(fields: [user_id], references: [id])
+
+	created_on				DateTime @db.Timestamptz(3) @default(dbgenerated("now()"))
+	updated_on				DateTime @db.Timestamptz(3) @default(dbgenerated("now()"))
+	
+
+	@@map("workspace_users")
+	@@unique([user_id, workspace_id])
+}
+
+model Projects {
+	id 						String @db.Uuid @id @default(dbgenerated("gen_random_uuid()"))
+
+    name                    String
+    slug                    String @unique
+
+    workspace               WorkspaceProjects[]
+
+	created_on				DateTime @db.Timestamptz(3) @default(dbgenerated("now()"))
+	updated_on				DateTime @db.Timestamptz(3) @default(dbgenerated("now()"))
+
+	@@map("projects")
+}
+
+model WorkspaceProjects {
+	id 						String @db.Uuid @id @default(dbgenerated("gen_random_uuid()"))
+
+	workspace_id     		String @db.Uuid
+	project_id 				String @db.Uuid
+
+	workspace       		Workspaces @relation(fields: [workspace_id], references: [id])
+	project   				Projects @relation(fields: [project_id], references: [id])
+
+	created_on				DateTime @db.Timestamptz(3) @default(dbgenerated("now()"))
+	updated_on				DateTime @db.Timestamptz(3) @default(dbgenerated("now()"))
+	
+
+	@@map("workspace_projects")
+	@@unique([project_id, workspace_id])
+}

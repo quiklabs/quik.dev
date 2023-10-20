@@ -1,14 +1,12 @@
 import Fastify from "fastify";
 import pino from "pino";
+import { routes } from "./routes";
 
 const fastify = Fastify({ logger: pino({ level: "info" }) });
 
-// Declare a route
-fastify.get("/", async function handler(request, reply) {
-  return { hello: "world" };
-});
-
 async function main() {
+  await fastify.register(routes, { prefix: "/api/v1" });
+
   // Run the server!
   try {
     await fastify.listen({ port: 3000 });
