@@ -14,12 +14,12 @@ export const Users = new Model<IUser>({
   pool,
   schema: "public",
   table: "users",
-  columns: new Columns([
+  columns: new Columns(
     new Column({ name: "id", datatype: "uuid" }),
     new Column({ name: "fullname", datatype: "text" }),
     new Column({ name: "email", datatype: "text" }),
     new Column({ name: "hashed_password", datatype: "text", hidden: true }),
     new Column({ name: "created_on", datatype: "timestamptz" }),
     new Column({ name: "updated_on", datatype: "timestamptz" }),
-  ]),
+  ),
 });

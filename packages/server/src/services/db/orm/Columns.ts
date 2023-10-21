@@ -1,13 +1,7 @@
 import type { Column } from "./Column";
 
-export class Columns {
-  value: Column[];
-
-  constructor(value: Column[]) {
-    this.value = value;
-  }
-
+export class Columns extends Array<Column> {
   getNames() {
-    return this.value.filter((column) => !column.hidden).map((column) => column.name);
+    return this.filter((column) => !column.hidden).map((column) => column.name);
   }
 }

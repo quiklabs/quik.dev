@@ -27,12 +27,15 @@ export class Model<TModelDef extends QueryResultRow> {
     const sql = format(
       /* sql */ `
         select %I from %I.%I limit 1
-      `,
+      `.trim(),
       this.columns.getNames(),
       this.schema,
       this.table,
     );
     const { rows }: QueryResult<TModelDef> = await client.query(sql);
-    return rows[0];
+    client.release();
+
+    const user = rows[0];
+    return user;
   }
 }

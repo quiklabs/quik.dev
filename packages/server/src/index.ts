@@ -1,9 +1,9 @@
 import "dotenv/config";
 import Fastify from "fastify";
-import pino from "pino";
 import { routes } from "./routes";
+import { logger } from "./services/logger";
 
-const fastify = Fastify({ logger: pino({ level: "info" }) });
+const fastify = Fastify({ logger });
 
 async function main() {
   await fastify.register(routes, { prefix: "/api/v1" });
