@@ -1,3 +1,4 @@
+import "dotenv/config";
 import Fastify from "fastify";
 import pino from "pino";
 import { routes } from "./routes";

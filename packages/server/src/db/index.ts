@@ -1,12 +1,10 @@
 import { Pool } from "pg";
 
-const pool = new Pool();
+const pool = new Pool({
+  connectionString: process.env.DB_URL,
+});
 
 export const getDbClient = async () => {
-  try {
-    const client = await pool.connect();
-    return client;
-  } catch (err) {
-    console.error("Could not get client from pool", err);
-  }
+  const client = await pool.connect();
+  return client;
 };

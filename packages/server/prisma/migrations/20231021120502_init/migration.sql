@@ -1,9 +1,9 @@
 -- CreateTable
 CREATE TABLE "users" (
     "id" UUID NOT NULL DEFAULT gen_random_uuid(),
-    "name" TEXT NOT NULL,
+    "fullname" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "password" TEXT NOT NULL,
+    "hashed_password" TEXT NOT NULL,
     "created_on" TIMESTAMPTZ(3) NOT NULL DEFAULT now(),
     "updated_on" TIMESTAMPTZ(3) NOT NULL DEFAULT now(),
 
