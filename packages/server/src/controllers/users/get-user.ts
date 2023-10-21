@@ -1,5 +1,5 @@
-import { router } from "../../helpers/router";
-import { Users } from "../../models/Users";
+import { router } from "../../services/router";
+import { Users } from "../../services/db/models";
 
 export async function getUserController() {
   const user = await Users.findOne();

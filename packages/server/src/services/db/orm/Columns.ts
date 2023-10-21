@@ -1,14 +1,13 @@
-import { type Column } from "./Column";
+import type { Column } from "./Column";
 
 export class Columns {
   value: Column[];
 
   constructor(value: Column[]) {
-    console.log({ value });
     this.value = value;
   }
 
   getNames() {
-    return this.value.map((column) => column.name);
+    return this.value.filter((column) => !column.hidden).map((column) => column.name);
   }
 }

@@ -21,6 +21,8 @@ module.exports = {
   rules: {
     "prettier/prettier": ["error", { printWidth: 120 }],
     // typescript
+    "@typescript-eslint/consistent-type-imports": ["error", { fixStyle: "separate-type-imports" }],
+    "@typescript-eslint/consistent-type-exports": ["error", { fixMixedExportsWithInlineTypeSpecifier: false }],
     "@typescript-eslint/strict-boolean-expressions": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-floating-promises": "off",

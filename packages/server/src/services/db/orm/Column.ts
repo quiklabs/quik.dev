@@ -1,4 +1,4 @@
-import { type TColumnDatatype } from "./types";
+import type { TColumnDatatype } from "./types";
 
 interface IColumnConstructorArgs {
   name: string;

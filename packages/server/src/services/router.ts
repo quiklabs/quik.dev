@@ -1,4 +1,4 @@
-import { type FastifyInstance, type RouteHandlerMethod } from "fastify";
+import type { FastifyInstance, RouteHandlerMethod } from "fastify";
 
 type Methods = "get" | "head" | "post" | "put" | "delete" | "options" | "patch";
 
