@@ -5,6 +5,7 @@
     "scripts": {
         "start": "nodemon --watch src src/index.ts | pino-pretty",
         "build": "tsc --project tsconfig.json",
+        "build:ncc": "ncc build src/index.ts -m -C -o dist",
         "lint": "eslint src/**/* --ext js,ts,tsx,jsx",
         "migrate:reset": "prisma migrate reset",
         "migrate:create": "prisma migrate dev --create-only",
@@ -14,6 +15,7 @@
         "@types/node": "^20.7.0",
         "@types/pg": "^8.10.7",
         "@types/pg-format": "^1.0.4",
+        "@vercel/ncc": "^0.38.1",
         "nodemon": "^3.0.1",
         "pino-pretty": "^10.2.3",
         "ts-node": "^10.9.1",
