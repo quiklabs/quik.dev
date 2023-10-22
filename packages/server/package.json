@@ -3,9 +3,11 @@
     "version": "0.0.1",
     "main": "dist/index.js",
     "scripts": {
-        "start": "nodemon --watch src src/index.ts | pino-pretty",
-        "build": "tsc --project tsconfig.json",
-        "build:ncc": "ncc build src/index.ts -m -C -o dist",
+        "start": "pnpm run build:watch & node --watch dist/index.js",
+        "start:prod": "node dist/index.js",
+        "build": "ncc build -s -o dist src/index.ts",
+        "build:watch": "ncc build -w -s -o dist src/index.ts",
+        "build:prod": "ncc build -s -m -C -o dist src/index.ts ",
         "lint": "eslint src/**/* --ext js,ts,tsx,jsx",
         "migrate:reset": "prisma migrate reset",
         "migrate:create": "prisma migrate dev --create-only",
@@ -18,7 +20,6 @@
         "@vercel/ncc": "^0.38.1",
         "nodemon": "^3.0.1",
         "pino-pretty": "^10.2.3",
-        "ts-node": "^10.9.1",
         "typescript": "^5.2.2"
     },
     "dependencies": {

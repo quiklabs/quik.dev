@@ -1,3 +1,4 @@
+// import { types } from "pg";
 import type { Pool, QueryResult } from "pg";
 import type { Columns } from "./Columns";
 import { Stmt } from "./Stmt";
@@ -9,7 +10,9 @@ interface TModelConstructorArgs {
   columns: Columns;
 }
 
-type TParams<TModelDef extends Record<string, any>> = Partial<TModelDef>;
+type TModelQuery<TModelDef> = Partial<TModelDef>;
+
+// type TModelBody<TModelDef> = Omit<TModelDef, "id">;
 
 export class Model<TModelDef extends Record<string, any>> {
   pool: Pool;
@@ -31,7 +34,7 @@ export class Model<TModelDef extends Record<string, any>> {
     return stmt;
   }
 
-  #composeWhere(params: TParams<TModelDef> = {}): Stmt {
+  #composeWhere(params: TModelQuery<TModelDef> = {}): Stmt {
     const stmt = new Stmt();
     const keys = Object.keys(params);
     if (keys.length > 0) {
@@ -51,7 +54,7 @@ export class Model<TModelDef extends Record<string, any>> {
     return stmt;
   }
 
-  async findOne(params?: TParams<TModelDef>): Promise<TModelDef> {
+  async findOne(params?: TModelQuery<TModelDef>): Promise<TModelDef> {
     const stmt = new Stmt();
     stmt.addStmt(this.#composeSelect());
     stmt.addStmt(this.#composeWhere(params));
@@ -66,7 +69,7 @@ export class Model<TModelDef extends Record<string, any>> {
     return user;
   }
 
-  async findAll(params?: TParams<TModelDef>): Promise<TModelDef[]> {
+  async findAll(params?: TModelQuery<TModelDef>): Promise<TModelDef[]> {
     const stmt = new Stmt();
     stmt.addStmt(this.#composeSelect());
     stmt.addStmt(this.#composeWhere(params));
@@ -79,4 +82,9 @@ export class Model<TModelDef extends Record<string, any>> {
     const users = rows;
     return users;
   }
+
+  // async createOne(body: TModelBody<TModelDef>): Promise<TModelDef> {
+  //   const user: TModelDef = { name: "user" };
+  //   return user;
+  // }
 }

@@ -7,7 +7,7 @@ module.exports = {
     node: true,
   },
   extends: ["standard-with-typescript", "plugin:prettier/recommended"],
-  ignorePatterns: ["dist", "node_modules"],
+  ignorePatterns: ["node_modules", "dist", ".ts-node"],
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",

@@ -12,6 +12,7 @@ coverage
 build
 dist
 .turbo
+.ts-node
 
 # .env
 .env

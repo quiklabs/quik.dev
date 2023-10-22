@@ -1,3 +1,8 @@
 import pino from "pino";
+import pretty from "pino-pretty";
 
-export const logger = pino({ level: process.env.LOG_LEVEL });
+const isProd = process.env.ENVIRONMENT === "production";
+
+const pinoArgs = isProd ? [{ level: "info" }] : [{ level: "debug" }, pretty()];
+
+export const logger = pino(...pinoArgs);

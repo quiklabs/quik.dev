@@ -4,6 +4,9 @@
     // target
     "target": "es2016",
     "module": "commonjs",
+    "sourceMap": true,
+    // "inlineSourceMap": true,
+    // "inlineSources": true,
 
     // dirs
     "rootDir": "src",
