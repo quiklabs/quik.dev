@@ -1,7 +1,7 @@
-import { Column, Columns, Model } from "../orm";
-import { pool } from "../pool";
+import { Column, Columns, Model } from "../services/db/orm";
+import { pool } from "../services/db/pool";
 
-export interface IWorkspace {
+export interface IProject {
   id: string;
   name: string;
   slug: string;
@@ -9,10 +9,10 @@ export interface IWorkspace {
   updated_on: Date;
 }
 
-export const Workspaces = new Model<IWorkspace>({
+export const Projects = new Model<IProject>({
   pool,
   schema: "public",
-  table: "workspaces",
+  table: "projects",
   columns: new Columns(
     new Column({ name: "id", datatype: "uuid" }),
     new Column({ name: "name", datatype: "text" }),

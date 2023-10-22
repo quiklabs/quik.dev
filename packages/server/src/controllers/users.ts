@@ -1,22 +1,13 @@
+import { Router } from "../services/router";
+import { Users } from "../models";
+import { GenericControllers } from "../services/controller";
+
 import type { FastifyInstance } from "fastify";
-
-import { router } from "../services/router";
-import { Users } from "../services/db/models";
-
-export async function getUserController() {
-  const user = await Users.findOne({ fullname: "rudra" });
-  return user;
-}
-
-export async function listUsersController() {
-  const user = await Users.findAll();
-  return user;
-}
-
-export const getUserRoute = router("get", "/:id")(getUserController);
-export const listUsersRoute = router("get", "/")(listUsersController);
+import type { IUser } from "../models";
 
 export async function userRoutes(fastify: FastifyInstance) {
-  await fastify.register(getUserRoute);
-  await fastify.register(listUsersRoute);
+  const userControllers = new GenericControllers<IUser>({ fastify, model: Users });
+  const router = new Router({ fastify });
+  router.addRoute("get", "/:id", userControllers.getById);
+  router.addRoute("get", "/", userControllers.getList);
 }

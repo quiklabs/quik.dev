@@ -1,5 +1,5 @@
-import { Column, Columns, Model } from "../orm";
-import { pool } from "../pool";
+import { Column, Columns, Model } from "../services/db/orm";
+import { pool } from "../services/db/pool";
 
 export interface IUser {
   id: string;

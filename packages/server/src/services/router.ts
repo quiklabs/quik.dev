@@ -2,11 +2,18 @@ import type { FastifyInstance, RouteHandlerMethod } from "fastify";
 
 type Methods = "get" | "head" | "post" | "put" | "delete" | "options" | "patch";
 
-export const router = (method: Methods, path: string) => {
-  return (handler: RouteHandlerMethod) => {
-    return async function (fastify: FastifyInstance) {
-      fastify.log.debug(`registering route [${method} ${fastify.prefix}${path}] -> ${handler.name}`);
-      fastify[method](path, handler);
-    };
-  };
-};
+interface IRouterConstructorArgs {
+  fastify: FastifyInstance;
+}
+export class Router {
+  fastify;
+
+  constructor({ fastify }: IRouterConstructorArgs) {
+    this.fastify = fastify;
+  }
+
+  addRoute(method: Methods, path: string, controller: RouteHandlerMethod) {
+    this.fastify.log.debug(`registering route [${method}] ${this.fastify.prefix}${path}`);
+    this.fastify[method](path, controller);
+  }
+}
