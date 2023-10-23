@@ -1,0 +1,75 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+model Users {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  fullname        String
+  email           String   @unique
+  hashed_password String
+  created_on      DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+  updated_on      DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+
+  workspaces WorkspaceUsers[]
+
+  @@map("users")
+}
+
+model Workspaces {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  name       String
+  slug       String   @unique
+  created_on DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+  updated_on DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+
+  users    WorkspaceUsers[]
+  projects WorkspaceProjects[]
+
+  @@map("workspaces")
+}
+
+model WorkspaceUsers {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  workspace_id String   @db.Uuid
+  user_id      String   @db.Uuid
+  created_on   DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+  updated_on   DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+
+  workspace Workspaces @relation(fields: [workspace_id], references: [id])
+  user      Users      @relation(fields: [user_id], references: [id])
+
+  @@unique([user_id, workspace_id])
+  @@map("workspace_users")
+}
+
+model Projects {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  name       String
+  slug       String   @unique
+  created_on DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+  updated_on DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+
+  workspace WorkspaceProjects[]
+
+  @@map("projects")
+}
+
+model WorkspaceProjects {
+  id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+
+  workspace_id String   @db.Uuid
+  project_id   String   @db.Uuid
+  created_on   DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+  updated_on   DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+
+  workspace Workspaces @relation(fields: [workspace_id], references: [id])
+  project   Projects   @relation(fields: [project_id], references: [id])
+
+  @@unique([project_id, workspace_id])
+  @@map("workspace_projects")
+}

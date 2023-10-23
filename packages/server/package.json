@@ -1,0 +1,34 @@
+{
+    "name": "@quik/server",
+    "version": "0.0.1",
+    "main": "dist/index.js",
+    "scripts": {
+        "start": "pnpm run build:watch & node --watch dist/index.js",
+        "start:prod": "node dist/index.js",
+        "build": "ncc build -s -o dist src/index.ts",
+        "build:watch": "ncc build -w -s -o dist src/index.ts",
+        "build:prod": "ncc build -s -m -C -o dist src/index.ts ",
+        "lint": "eslint src/**/* --ext js,ts,tsx,jsx",
+        "migrate:reset": "prisma migrate reset",
+        "migrate:create": "prisma migrate dev --create-only",
+        "migrate": "prisma migrate deploy"
+    },
+    "devDependencies": {
+        "@types/node": "^20.7.0",
+        "@types/pg": "^8.10.7",
+        "@types/pg-format": "^1.0.4",
+        "@vercel/ncc": "^0.38.1",
+        "nodemon": "^3.0.1",
+        "pino-pretty": "^10.2.3",
+        "typescript": "^5.2.2"
+    },
+    "dependencies": {
+        "dotenv": "^16.3.1",
+        "fastify": "^4.24.2",
+        "pg": "^8.11.3",
+        "pg-format": "^1.0.4",
+        "pino": "^8.16.0",
+        "prisma": "^5.4.2",
+        "typia": "^5.2.3"
+    }
+}
