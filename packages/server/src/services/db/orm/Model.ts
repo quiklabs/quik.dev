@@ -1,90 +1,96 @@
 // import { types } from "pg";
 import type { Pool, QueryResult } from "pg";
 import type { Columns } from "./Columns";
-import { Stmt } from "./Stmt";
+import { intersection } from "lodash";
+import type { SqlStatment } from "./sql";
+import { sql, sqlIdent, sqlJoin, sqlJoinIdents } from "./sql";
 
-interface TModelConstructorArgs {
+interface TModelConstructorArgs<M extends Record<string, any>> {
   pool: Pool;
   schema: string;
   table: string;
-  columns: Columns;
+  columns: Columns<M>;
+  alias?: string;
+  idKey?: string;
 }
 
-type TModelQuery<TModelDef> = Partial<TModelDef>;
+type TModelQuery<M extends Record<string, any>> = Partial<M>;
 
-// type TModelBody<TModelDef> = Omit<TModelDef, "id">;
+type TModelBody<M> = Omit<M, "id">;
 
-export class Model<TModelDef extends Record<string, any>> {
-  pool: Pool;
-  schema: string;
-  table: string;
-  columns: Columns;
+interface TModelColsListOptions<M extends Record<string, any>> {
+  pickCols?: Array<keyof M>;
+}
+interface TModelFindAllOptions<M extends Record<string, any>> {
+  params?: TModelQuery<M>;
+  pickCols?: Array<keyof M>;
+}
 
-  constructor({ pool, schema, table, columns }: TModelConstructorArgs) {
+export class Model<M extends Record<string, any>> {
+  readonly pool: Pool;
+  readonly schema: string;
+  readonly table: string;
+  readonly columns: Columns<M>;
+  readonly alias: string;
+  readonly idKey: string;
+  readonly #ident: SqlStatment;
+
+  constructor({ pool, schema, table, columns, alias = "t", idKey = "id" }: TModelConstructorArgs<M>) {
     this.pool = pool;
     this.schema = schema;
     this.table = table;
     this.columns = columns;
+    this.alias = alias;
+    this.idKey = idKey;
+    this.#ident = sqlIdent(this.table, this.schema, this.alias);
   }
 
-  #composeSelect(): Stmt {
-    const stmt = new Stmt();
-    stmt.addPartials(/* sql */ `select %I from "%I"."%I"`);
-    stmt.addPartialParams(this.columns.getNames(), this.schema, this.table);
-    return stmt;
-  }
-
-  #composeWhere(params: TModelQuery<TModelDef> = {}): Stmt {
-    const stmt = new Stmt();
-    const keys = Object.keys(params);
-    if (keys.length > 0) {
-      keys.forEach((key, index) => {
-        stmt.addPartials(/* sql */ ` ${index === 0 ? "where" : "and"} %I = ?`);
-        stmt.addPartialParams(key);
-        stmt.addValues(params[key]);
-      });
+  #colsList({ pickCols }: TModelColsListOptions<M>) {
+    let cols = this.columns.getNames();
+    if (pickCols && pickCols.length > 0) {
+      cols = intersection(cols, pickCols);
     }
-    return stmt;
+    return sqlJoinIdents(cols.map((c) => [c.toString(), this.alias]));
   }
 
-  #composeLimit(limit: number): Stmt {
-    const stmt = new Stmt();
-    stmt.addPartials(/* sql */ ` limit ?`);
-    stmt.addValues(limit);
-    return stmt;
+  #whereClause(params: TModelQuery<M | Record<string, string>> = {}): SqlStatment {
+    const paramEntries = Object.keys(params);
+    const stmts = paramEntries.map((key) => sql`${sqlIdent(key, this.alias)} = ${params[key]}`);
+    if (stmts.length === 0) {
+      return sql``;
+    }
+    return sql`where ${sqlJoin(stmts)}`;
   }
 
-  async findOne(params?: TModelQuery<TModelDef>): Promise<TModelDef> {
-    const stmt = new Stmt();
-    stmt.addStmt(this.#composeSelect());
-    stmt.addStmt(this.#composeWhere(params));
-    stmt.addStmt(this.#composeLimit(1));
-    const qStmt = stmt.build();
+  async findById(id: string, { pickCols }: TModelFindAllOptions<M> = {}): Promise<M> {
+    const params = { [this.idKey]: id };
+    const stmt = sql`
+      select ${this.#colsList({ pickCols })}
+      from ${this.#ident}
+      ${this.#whereClause(params)}
+      limit 1  
+    `;
 
     const client = await this.pool.connect();
-    const { rows }: QueryResult<TModelDef> = await client.query(qStmt);
+    const { rows }: QueryResult<M> = await client.query(stmt);
     client.release();
 
     const user = rows[0];
     return user;
   }
 
-  async findAll(params?: TModelQuery<TModelDef>): Promise<TModelDef[]> {
-    const stmt = new Stmt();
-    stmt.addStmt(this.#composeSelect());
-    stmt.addStmt(this.#composeWhere(params));
-    const qStmt = stmt.build();
+  async find({ params, pickCols }: TModelFindAllOptions<M> = {}): Promise<M[]> {
+    const stmt = sql`
+      select ${this.#colsList({ pickCols })}
+      from ${this.#ident} 
+      ${this.#whereClause(params)}
+    `;
 
     const client = await this.pool.connect();
-    const { rows }: QueryResult<TModelDef> = await client.query(qStmt);
+    const { rows }: QueryResult<M> = await client.query(stmt);
     client.release();
 
     const users = rows;
     return users;
   }
-
-  // async createOne(body: TModelBody<TModelDef>): Promise<TModelDef> {
-  //   const user: TModelDef = { name: "user" };
-  //   return user;
-  // }
 }
