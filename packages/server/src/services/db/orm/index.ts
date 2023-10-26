@@ -1,3 +1,3 @@
-export { Columns } from "./Columns";
+export { ColumnList } from "./ColumnList";
 export { Column } from "./Column";
 export { Model } from "./Model";

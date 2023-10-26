@@ -1,73 +1,71 @@
-// import { types } from "pg";
 import type { Pool, QueryResult } from "pg";
-import type { Columns } from "./Columns";
-import { intersection } from "lodash";
+import type { ColumnList } from "./ColumnList";
 import type { SqlStatment } from "./sql";
-import { sql, sqlIdent, sqlJoin, sqlJoinIdents } from "./sql";
+import { sql, sqlIdent, sqlJoin } from "./sql";
+import type { TColumnName } from "./Column";
 
 interface TModelConstructorArgs<M extends Record<string, any>> {
   pool: Pool;
   schema: string;
   table: string;
-  columns: Columns<M>;
+  columns: ColumnList<M>;
   alias?: string;
   idKey?: string;
 }
 
-type TModelQuery<M extends Record<string, any>> = Partial<M>;
+type TModeFilter<M extends Record<string, any>> = Partial<M>;
 
-type TModelBody<M> = Omit<M, "id">;
+type TModelBody<M> = Partial<M>;
 
-interface TModelColsListOptions<M extends Record<string, any>> {
-  pickCols?: Array<keyof M>;
+interface TModelClauseWhereOpts<M extends Record<string, any>> {
+  filter?: TModeFilter<M>;
+}
+
+interface TModelFindByIdOpts<M extends Record<string, any>> {
+  pick?: Array<TColumnName<M>>;
 }
 interface TModelFindAllOptions<M extends Record<string, any>> {
-  params?: TModelQuery<M>;
-  pickCols?: Array<keyof M>;
+  filter?: TModeFilter<M>;
+  pick?: Array<TColumnName<M>>;
+}
+
+interface TModelInsertOneOptions<M extends Record<string, any>> {
+  body: TModelBody<M>;
 }
 
 export class Model<M extends Record<string, any>> {
   readonly pool: Pool;
   readonly schema: string;
   readonly table: string;
-  readonly columns: Columns<M>;
-  readonly alias: string;
+  readonly columns: ColumnList<M>;
   readonly idKey: string;
+  readonly #alias: string;
   readonly #ident: SqlStatment;
 
   constructor({ pool, schema, table, columns, alias = "t", idKey = "id" }: TModelConstructorArgs<M>) {
     this.pool = pool;
     this.schema = schema;
     this.table = table;
-    this.columns = columns;
-    this.alias = alias;
     this.idKey = idKey;
-    this.#ident = sqlIdent(this.table, this.schema, this.alias);
+    this.columns = columns;
+    this.#alias = alias;
+    this.#ident = sqlIdent(this.table, this.schema);
   }
 
-  #colsList({ pickCols }: TModelColsListOptions<M>) {
-    let cols = this.columns.getNames();
-    if (pickCols && pickCols.length > 0) {
-      cols = intersection(cols, pickCols);
+  #clauseWhere({ filter = {} }: TModelClauseWhereOpts<M> = {}): SqlStatment {
+    const keys = Object.keys(filter ?? {});
+    if (keys.length > 0) {
+      const stmts = keys.map((key) => sql`${sqlIdent(key, this.#alias)} = ${filter[key]}`);
+      return sql`where ${sqlJoin(stmts)}`;
     }
-    return sqlJoinIdents(cols.map((c) => [c.toString(), this.alias]));
+    return sql``;
   }
 
-  #whereClause(params: TModelQuery<M | Record<string, string>> = {}): SqlStatment {
-    const paramEntries = Object.keys(params);
-    const stmts = paramEntries.map((key) => sql`${sqlIdent(key, this.alias)} = ${params[key]}`);
-    if (stmts.length === 0) {
-      return sql``;
-    }
-    return sql`where ${sqlJoin(stmts)}`;
-  }
-
-  async findById(id: string, { pickCols }: TModelFindAllOptions<M> = {}): Promise<M> {
-    const params = { [this.idKey]: id };
+  async selectById(id: string, { pick }: TModelFindByIdOpts<M> = {}): Promise<M> {
     const stmt = sql`
-      select ${this.#colsList({ pickCols })}
-      from ${this.#ident}
-      ${this.#whereClause(params)}
+      select ${this.columns.identsWithParent(this.#alias, { pick })}
+      from ${this.#ident} ${this.#alias}
+      where ${sqlIdent(this.idKey, this.#alias)} = ${id}
       limit 1  
     `;
 
@@ -79,11 +77,11 @@ export class Model<M extends Record<string, any>> {
     return user;
   }
 
-  async find({ params, pickCols }: TModelFindAllOptions<M> = {}): Promise<M[]> {
+  async select({ filter, pick }: TModelFindAllOptions<M> = {}): Promise<M[]> {
     const stmt = sql`
-      select ${this.#colsList({ pickCols })}
-      from ${this.#ident} 
-      ${this.#whereClause(params)}
+      select ${this.columns.identsWithParent(this.#alias, { pick })}
+      from ${this.#ident} ${this.#alias}
+      ${this.#clauseWhere(filter)}
     `;
 
     const client = await this.pool.connect();
@@ -92,5 +90,22 @@ export class Model<M extends Record<string, any>> {
 
     const users = rows;
     return users;
+  }
+
+  async insertOne({ body }: TModelInsertOneOptions<M>) {
+    const colNames = Object.keys(body) as Array<TColumnName<M>>;
+    const values = Object.values(body);
+    const stmt = sql`
+      insert into ${this.#ident} (${this.columns.idents({ pick: colNames })})
+      values ${values}
+      returning *
+    `;
+
+    const client = await this.pool.connect();
+    const { rows }: QueryResult<M> = await client.query(stmt);
+    client.release();
+
+    const user = rows[0];
+    return user;
   }
 }
