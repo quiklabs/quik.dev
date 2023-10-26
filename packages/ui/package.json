@@ -10,6 +10,12 @@
         "build": "tsc --project ./tsconfig.json --outDir ./dist",
         "lint": "eslint src/**/* --ext js,ts,tsx,jsx"
     },
+    "dependencies": {
+        "@mui/icons-material": "5.1.1",
+        "@mui/material": "^5.9.2",
+        "@mui/styled-engine": "5.1.1",
+        "@mui/styles": "^5.2.0"
+    },
     "devDependencies": {
         "@types/react": "^18.2.23",
         "react": "^18.2.0",

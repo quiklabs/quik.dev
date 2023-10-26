@@ -1,6 +1,12 @@
 {
-    "include": ["src/**/*"],
+    "compilerOptions": {
+      "baseUrl": "src",
+      "paths": {
+        "*": ["src/*"]
+      }
+    },
+    "include": ["src", "index.d.ts"],
     "exclude": ["dist"],
-    "extends": "../../tsconfig.json"
+    "extends": "../../tsconfig.json",
   }
   

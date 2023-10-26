@@ -1,1 +1,10 @@
-export { default as Main } from './views/Main';
+export { default as VuiAlert } from './components/VuiAlert';
+export { default as VuiAvatar } from './components/VuiAvatar';
+export { default as VuiBadge } from './components/VuiBadge';
+export { default as VuiBox } from './components/VuiBox';
+export { default as VuiButton } from './components/VuiButton';
+export { default as VuiInput } from './components/VuiInput';
+export { default as VuiPagination } from './components/VuiPagination';
+export { default as VuiProgress } from './components/VuiProgress';
+export { default as VuiSwitch } from './components/VuiSwitch';
+export { default as VuiTypography } from './components/VuiTypography';
