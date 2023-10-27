@@ -13,12 +13,18 @@ class Server {
   }
 
   async loadRoutes() {
-    await this.fastify.register(routes, { prefix: "/api/v1" });
+    this.fastify.register(routes, { prefix: "/api/v1" });
+    await this.fastify.ready();
   }
 
   async start() {
     try {
-      await this.fastify.listen({ port: 3000 });
+      await this.fastify.listen({
+        port: this.port,
+        listenTextResolver: (address) => {
+          return `quick.dev server running at ${address}`;
+        },
+      });
     } catch (err) {
       console.error(err);
       this.fastify.log.error(err);
@@ -28,11 +34,7 @@ class Server {
 }
 
 (async function _main_() {
-  console.log("Initializing ...");
   const server = new Server();
-  console.log("Loading ...");
   await server.loadRoutes();
-  console.log("Starting ...");
   await server.start();
-  console.log("OK");
 })();

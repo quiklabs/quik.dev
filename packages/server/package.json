@@ -3,7 +3,7 @@
     "version": "0.0.1",
     "main": "dist/index.js",
     "scripts": {
-        "start": "pnpm run build:watch & node --watch dist/index.js",
+        "start": "./scripts/start.sh",
         "start:prod": "node dist/index.js",
         "build": "ncc build -s -o dist src/index.ts",
         "build:watch": "ncc build -w -s -o dist src/index.ts",
@@ -24,6 +24,7 @@
         "typescript": "^5.2.2"
     },
     "dependencies": {
+        "ascii-text-generator": "^1.0.5",
         "dotenv": "^16.3.1",
         "fastify": "^4.24.2",
         "lodash": "^4.17.21",

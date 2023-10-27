@@ -132,6 +132,9 @@ importers:
 
   packages/server:
     dependencies:
+      ascii-text-generator:
+        specifier: ^1.0.5
+        version: 1.0.5
       dotenv:
         specifier: ^16.3.1
         version: 16.3.1
@@ -3897,6 +3900,10 @@ packages:
 
   /asap@2.0.6:
     resolution: {integrity: sha512-BSHWgDSAiKs50o2Re8ppvp3seVHXSRM44cdSsT9FfNEUUZLOGWVCsiWaRPWM1Znn+mqZ1OfVZ3z3DWEzSp7hRA==}
+    dev: false
+
+  /ascii-text-generator@1.0.5:
+    resolution: {integrity: sha512-7v4OVcL5j42unrXsIPfgwwmsSBgocDaNwlVo1J0dvnYQvuCbM+XuefoApq405iBtp/Xc1t1dxETqh9uiiaFUjA==}
     dev: false
 
   /asn1.js@5.4.1:

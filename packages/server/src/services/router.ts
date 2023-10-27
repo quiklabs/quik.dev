@@ -1,6 +1,6 @@
 import type { FastifyInstance, RouteHandlerMethod } from "fastify";
 
-type Methods = "get" | "head" | "post" | "put" | "delete" | "options" | "patch";
+type TRouteMethods = "get" | "head" | "post" | "put" | "delete" | "options" | "patch";
 
 interface IRouterConstructorArgs {
   fastify: FastifyInstance;
@@ -12,7 +12,7 @@ export class Router {
     this.fastify = fastify;
   }
 
-  addRoute(method: Methods, path: string, controller: RouteHandlerMethod) {
+  addRoute(method: TRouteMethods, path: string, controller: RouteHandlerMethod) {
     this.fastify.log.debug(`registering route [${method}] ${this.fastify.prefix}${path}`);
     this.fastify[method](path, controller);
   }
