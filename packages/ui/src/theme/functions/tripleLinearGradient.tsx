@@ -1,5 +1,10 @@
 
-function tripleLinearGradient(color, colorState, colorStateSecondary, angle) {
+function tripleLinearGradient(
+    color: string,
+    colorState: string,
+    colorStateSecondary: string,
+    angle: number = 310
+) {
   if (angle === undefined) {
     angle = 310;
   }

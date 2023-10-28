@@ -1,5 +1,5 @@
 
-function radialGradient(color, colorState, angle) {
+function radialGradient(color: string, colorState: string, angle: string = "69.43% 69.43% at 50% 50%") {
   if (angle === undefined) {
     angle = "69.43% 69.43% at 50% 50%";
   }

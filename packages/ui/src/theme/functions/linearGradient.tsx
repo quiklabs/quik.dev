@@ -1,5 +1,5 @@
 
-function linearGradient(color, colorState, angle) {
+function linearGradient(color: string, colorState: string, angle: number = 310) {
   if (angle === undefined) {
     angle = 310;
   }

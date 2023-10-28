@@ -140,6 +140,12 @@ importers:
       '@mui/styles':
         specifier: ^5.2.0
         version: 5.2.0(@types/react@18.2.23)(react@18.2.0)
+      '@types/chroma-js':
+        specifier: ^2.4.2
+        version: 2.4.2
+      chroma-js:
+        specifier: ^2.4.2
+        version: 2.4.2
     devDependencies:
       '@types/react':
         specifier: ^18.2.23
@@ -3119,6 +3125,10 @@ packages:
       '@types/node': 20.7.0
     dev: false
 
+  /@types/chroma-js@2.4.2:
+    resolution: {integrity: sha512-gbiHvCuBS9aXkE3OEDfS69bscNLTYtbbx2TQf6WyOu+4eCH1AH1gPSiDGF2UzwkRFAbqKNsC5F0mY0xcaEHCbg==}
+    dev: false
+
   /@types/connect-history-api-fallback@1.5.1:
     resolution: {integrity: sha512-iaQslNbARe8fctL5Lk+DsmgWOM83lM+7FzP0eQUJs1jd3kBE8NWqBTIT2S8SqQOJjxvt2eyIjpOuYeRXq2AdMw==}
     dependencies:
@@ -4626,6 +4636,10 @@ packages:
       readdirp: 3.6.0
     optionalDependencies:
       fsevents: 2.3.3
+    dev: false
+
+  /chroma-js@2.4.2:
+    resolution: {integrity: sha512-U9eDw6+wt7V8z5NncY2jJfZa+hUH8XEj8FQHgFJTrUFnJfXYf4Ml4adI2vXZOjqRDpFWtYVWypDfZwnJ+HIR4A==}
     dev: false
 
   /chrome-trace-event@1.0.3:
