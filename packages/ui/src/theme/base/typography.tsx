@@ -171,6 +171,7 @@ const typography = {
     regular: baseProperties.fontSizeRegular,
     lg: baseProperties.fontSizeLG,
     xl: baseProperties.fontSizeXL,
+    md: baseProperties.fontSizeRegular,
   },
 
   lineHeight: {

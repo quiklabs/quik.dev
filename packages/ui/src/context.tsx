@@ -57,7 +57,7 @@ function reducer(state: State, action: Action): State {
       return { ...state, layout: action.value };
     }
     default: {
-      throw new Error(`Unhandled action type: ${action.type}`);
+      throw new Error(`Unhandled action type: ${action}`);
     }
   }
 }
@@ -80,7 +80,7 @@ function VisionUIControllerProvider({ children }: VisionUIControllerProviderProp
 }
 
 function useVisionUIController(): [State, Dispatch<Action>] {
-  const context = useContext(VisionUI);
+  const context = useContext(VisionUI) as [State, Dispatch<Action>] | undefined;
 
   if (!context) {
     throw new Error("useVisionUIController should be used inside the VisionUIControllerProvider.");
@@ -90,14 +90,14 @@ function useVisionUIController(): [State, Dispatch<Action>] {
 }
 
 // Context module functions
-const setMiniSidenav = (dispatch, value) => dispatch({ type: "MINI_SIDENAV", value });
-const setTransparentSidenav = (dispatch, value) => dispatch({ type: "TRANSPARENT_SIDENAV", value });
-const setSidenavColor = (dispatch, value) => dispatch({ type: "SIDENAV_COLOR", value });
-const setTransparentNavbar = (dispatch, value) => dispatch({ type: "TRANSPARENT_NAVBAR", value });
-const setFixedNavbar = (dispatch, value) => dispatch({ type: "FIXED_NAVBAR", value });
-const setOpenConfigurator = (dispatch, value) => dispatch({ type: "OPEN_CONFIGURATOR", value });
-const setDirection = (dispatch, value) => dispatch({ type: "DIRECTION", value });
-const setLayout = (dispatch, value) => dispatch({ type: "LAYOUT", value });
+const setMiniSidenav = (dispatch: Dispatch<Action>, value: boolean) => dispatch({ type: "MINI_SIDENAV", value });
+const setTransparentSidenav = (dispatch: Dispatch<Action>, value: boolean) => dispatch({ type: "TRANSPARENT_SIDENAV", value });
+const setSidenavColor = (dispatch: Dispatch<Action>, value: string) => dispatch({ type: "SIDENAV_COLOR", value });
+const setTransparentNavbar = (dispatch: Dispatch<Action>, value: boolean) => dispatch({ type: "TRANSPARENT_NAVBAR", value });
+const setFixedNavbar = (dispatch: Dispatch<Action>, value: boolean) => dispatch({ type: "FIXED_NAVBAR", value });
+const setOpenConfigurator = (dispatch: Dispatch<Action>, value: boolean) => dispatch({ type: "OPEN_CONFIGURATOR", value });
+const setDirection = (dispatch: Dispatch<Action>, value: "ltr" | "rtl") => dispatch({ type: "DIRECTION", value });
+const setLayout = (dispatch: Dispatch<Action>, value: string) => dispatch({ type: "LAYOUT", value });
 
 export {
   VisionUIControllerProvider,

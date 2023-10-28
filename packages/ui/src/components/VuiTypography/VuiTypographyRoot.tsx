@@ -11,7 +11,7 @@ export default styled(Typography)(({ theme, ownerState }) => {
   const { linearGradient } = functions;
 
   // fontWeight styles
-  const fontWeights = {
+  const fontWeights: { [key: string]: any } = {
     light: fontWeightLight,
     regular: fontWeightRegular,
     medium: fontWeightMedium,

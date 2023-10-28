@@ -67,23 +67,23 @@ export default {
 
     "&:focus:not(:hover)": {
       color: primary.focus,
-      backgroundColor: transparent.focus,
+      // backgroundColor: transparent.focus,
       boxShadow: "none",
     },
   },
 
   secondary: {
-    color: text.secondary,
+    // color: text.secondary,
     backgroundColor: transparent.main,
 
     "&:hover": {
-      color: text.secondary,
+      // color: text.secondary,
       backgroundColor: transparent.main,
     },
 
     "&:focus:not(:hover)": {
-      color: text.secondary,
-      backgroundColor: transparent.focus,
+      // color: text.secondary,
+      // backgroundColor: transparent.focus,
       boxShadow: "none",
     },
   },
