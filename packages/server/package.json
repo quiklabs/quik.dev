@@ -3,9 +3,10 @@
     "version": "0.0.1",
     "main": "dist/index.js",
     "scripts": {
-        "start": "./scripts/start.sh",
+        "start": "figlet \"quik.dev\" && (trap 'kill 0' SIGINT; pnpm build:watch & sleep 3 && pnpm start:watch)",
+        "start:watch": "CI=true node --watch --inspect dist/index.js",
         "start:prod": "node dist/index.js",
-        "build": "ncc build -s -o dist src/index.ts",
+        "build": "rollup -c rollup.config.js --bundleConfigAsCjs",
         "build:watch": "ncc build -w -s -o dist src/index.ts",
         "build:prod": "ncc build -s -m -C -o dist src/index.ts ",
         "lint": "eslint src/**/* --ext js,ts,tsx,jsx",
@@ -14,13 +15,17 @@
         "migrate": "prisma migrate deploy"
     },
     "devDependencies": {
+        "@rollup/plugin-node-resolve": "^15.2.3",
+        "@rollup/plugin-typescript": "^11.1.5",
         "@types/lodash": "^4.14.200",
         "@types/node": "^20.7.0",
         "@types/pg": "^8.10.7",
         "@types/pg-format": "^1.0.4",
         "@vercel/ncc": "^0.38.1",
+        "figlet-cli": "^0.1.1",
         "nodemon": "^3.0.1",
         "pino-pretty": "^10.2.3",
+        "rollup": "^4.1.5",
         "typescript": "^5.2.2"
     },
     "dependencies": {

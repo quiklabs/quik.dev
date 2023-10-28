@@ -4,6 +4,8 @@ import type { SqlStatment } from "./sql";
 import { sql, sqlIdent, sqlJoin } from "./sql";
 import type { TColumnName } from "./Column";
 
+console.log("model");
+
 interface TModelConstructorArgs<M extends Record<string, any>> {
   pool: Pool;
   schema: string;

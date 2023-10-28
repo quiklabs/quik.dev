@@ -6,11 +6,12 @@
   "configurations": [
     {
       "name": "Launch Server",
-      "type": "node-terminal",
-      "request": "launch",
-      "cwd": "${workspaceFolder}/packages/server",
-      "command": "node --watch-path dist --watch dist/index.js",
-      "preLaunchTask": "@ build server",
+      "type": "node",
+      "request": "attach",
+      
+      // "cwd": "${workspaceFolder}/packages/server",
+      // "command": "node --watch-path dist --watch dist/index.js",
+      // "preLaunchTask": "@ build server",
       "skipFiles": [
         "<node_internals>/**",
       ],

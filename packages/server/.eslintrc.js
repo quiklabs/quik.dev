@@ -32,7 +32,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: [".eslintrc.js"],
+      files: [".eslintrc.js", "rollup.config.js"],
       extends: ["plugin:@typescript-eslint/disable-type-checked"],
       parserOptions: {
         sourceType: "module",
