@@ -1,3 +1,4 @@
+import { IconProps } from '@mui/material';
 
 import pxToRem from "../functions/pxToRem";
 
@@ -5,7 +6,7 @@ export default {
   defaultProps: {
     baseClassName: "material-icons-round",
     fontSize: "inherit",
-  },
+  } as Partial<IconProps>,
 
   styleOverrides: {
     fontSizeInherit: {

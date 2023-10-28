@@ -2,8 +2,10 @@ import boxShadows from "../../base/boxShadows";
 import typography from "../../base/typography";
 import colors from "../../base/colors";
 import borders from "../../base/borders";
+import { AutocompleteClasses, Theme } from '@mui/material';
 
 import pxToRem from "../../functions/pxToRem";
+import { OverridesStyleRules } from "@mui/material/styles/overrides";
 
 const { lg } = boxShadows;
 const { size } = typography;
@@ -77,5 +79,5 @@ export default {
         marginRight: 0,
       },
     },
-  },
+  } as Partial<OverridesStyleRules<keyof AutocompleteClasses, "MuiAutocomplete", Omit<Theme, "components">>>,
 };

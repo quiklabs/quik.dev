@@ -1,10 +1,11 @@
+import { SvgIconProps } from '@mui/material';
 
 import pxToRem from "../functions/pxToRem";
 
 export default {
   defaultProps: {
     fontSize: "inherit",
-  },
+  } as Partial<SvgIconProps>,
 
   styleOverrides: {
     fontSizeInherit: {

@@ -6,6 +6,8 @@ import typography from "../base/typography";
 import borders from "../base/borders";
 
 import pxToRem from "../functions/pxToRem";
+import {Theme, TooltipClasses} from '@mui/material';
+import {OverridesStyleRules} from "@mui/material/styles/overrides";
 
 const { black, light } = colors;
 const { size, fontWeightRegular } = typography;
@@ -33,5 +35,5 @@ export default {
     arrow: {
       color: black.main,
     },
-  },
+  } as Partial<OverridesStyleRules<keyof TooltipClasses, "MuiTooltip", Omit<Theme, "components">>>,
 };

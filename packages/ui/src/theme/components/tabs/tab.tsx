@@ -4,6 +4,8 @@ import borders from "../../base/borders";
 import colors from "../../base/colors";
 
 import pxToRem from "../../functions/pxToRem";
+import {TabClasses, Theme} from '@mui/material';
+import {OverridesStyleRules} from "@mui/material/styles/overrides";
 
 const { size, fontWeightRegular } = typography;
 const { borderRadius } = borders;
@@ -43,5 +45,5 @@ export default {
     labelIcon: {
       paddingTop: pxToRem(4),
     },
-  },
+  } as Partial<OverridesStyleRules<keyof TabClasses, "MuiTab", Omit<Theme, "components">>>,
 };
