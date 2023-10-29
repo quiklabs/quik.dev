@@ -3,11 +3,9 @@
     "version": "0.0.1",
     "main": "dist/index.js",
     "scripts": {
-        "prestart": "figlet \"quik.dev\"",
         "start": "nodemon --watch \"src/**/*\" -e ts,json --exec \"pnpm run build && node --inspect dist/index.js\" | pino-pretty",
-        "build": "ncc build -m -C -s --target es2021 -o dist src/index.ts",
-        "build:watch": "CI=true rollup --watch --config rollup.config.js --bundleConfigAsCjs",
-        "build:prod": "rollup --config rollup.config.js --bundleConfigAsCjs",
+        "build": "ncc build -C -s --target es2021 -o dist src/index.ts",
+        "build:prod": "ncc build -m -C -s --target es2021 -o dist src/index.ts",
         "lint": "eslint src/**/* --ext js,ts,tsx,jsx",
         "migrate:reset": "prisma migrate reset",
         "migrate:create": "prisma migrate dev --create-only",
@@ -19,7 +17,6 @@
         "@types/pg": "^8.10.7",
         "@types/pg-format": "^1.0.4",
         "@vercel/ncc": "^0.38.1",
-        "figlet-cli": "^0.1.1",
         "nodemon": "^3.0.1",
         "pino-pretty": "^10.2.3",
         "typescript": "^5.2.2"
