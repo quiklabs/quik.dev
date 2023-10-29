@@ -6,8 +6,8 @@
     "license": "MIT",
     "dependencies": {
         "@emotion/cache": "11.4.0",
-		"@emotion/react": "^11.9.3",
-		"@emotion/styled": "^11.9.3",
+        "@emotion/react": "^11.11.1",
+        "@emotion/styled": "^11.11.0",
         "@mui/icons-material": "5.1.1",
         "@mui/material": "^5.14.15",
         "@mui/styled-engine": "5.1.1",
