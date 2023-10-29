@@ -3,9 +3,8 @@
   "compilerOptions": {
     "lib": ["ES2022"],
     "target": "ES2022",
-    "module": "Node16",
-    "moduleResolution": "Node16",
-    "importHelpers": true,
+    "module": "ES6",
+    "moduleResolution": "Bundler",
     "sourceMap": true,
     // "inlineSourceMap": true,
     // "inlineSources": true,
