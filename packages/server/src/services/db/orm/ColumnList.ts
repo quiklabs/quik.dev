@@ -30,7 +30,10 @@ export class ColumnList<M extends Record<string, any>> {
   }
 
   identsWithParent(parent: string, { pick = [] }: TColumnListIdentsWithParentOptions<M> = {}) {
-    const colNames = intersection(this.names(), pick);
+    let colNames = this.names();
+    if (pick.length > 0) {
+      colNames = intersection(colNames, pick);
+    }
     return sqlJoinIdents(colNames.map((c) => [c.toString(), parent]));
   }
 }

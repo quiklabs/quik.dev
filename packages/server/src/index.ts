@@ -1,7 +1,12 @@
 import "dotenv/config";
 import type { FastifyInstance } from "fastify";
 import Fastify from "fastify";
-import { routes } from "./routes";
+import { UserController } from "./controllers/UserController";
+import { WorkspaceController } from "./controllers/workspaces";
+import { ProjectController } from "./controllers/projects";
+import { Router } from "./services/Router";
+import { AuthController } from "./controllers/AuthController";
+// import { routes } from "./routes";
 
 class Server {
   port: number;
@@ -13,8 +18,11 @@ class Server {
   }
 
   async loadRoutes() {
-    this.fastify.register(routes, { prefix: "/api/v1" });
-    await this.fastify.ready();
+    const router = new Router({ fastify: this.fastify });
+    await router.register("/auth", new AuthController());
+    await router.register("/users", new UserController());
+    await router.register("/workspaces", new WorkspaceController());
+    await router.register("/projects", new ProjectController());
   }
 
   async start() {

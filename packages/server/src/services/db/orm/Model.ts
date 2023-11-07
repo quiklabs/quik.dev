@@ -41,6 +41,7 @@ export class Model<M extends Record<string, any>> {
   readonly idKey: string;
   readonly #alias: string;
   readonly #ident: SqlStatment;
+  readonly #identWithAlias: SqlStatment;
 
   constructor({ pool, schema, table, columns, alias = "t", idKey = "id" }: TModelConstructorArgs<M>) {
     this.pool = pool;
@@ -50,10 +51,12 @@ export class Model<M extends Record<string, any>> {
     this.columns = columns;
     this.#alias = alias;
     this.#ident = sqlIdent(this.table, this.schema);
+    this.#identWithAlias = sqlIdent(this.table, this.schema, this.#alias);
   }
 
   #clauseWhere({ filter = {} }: TModelClauseWhereOpts<M> = {}): SqlStatment {
     const keys = Object.keys(filter ?? {});
+
     if (keys.length > 0) {
       const stmts = keys.map((key) => sql`${sqlIdent(key, this.#alias)} = ${filter[key]}`);
       return sql`where ${sqlJoin(stmts)}`;
@@ -64,7 +67,7 @@ export class Model<M extends Record<string, any>> {
   async selectById(id: string, { pick }: TModelFindByIdOpts<M> = {}): Promise<M> {
     const stmt = sql`
       select ${this.columns.identsWithParent(this.#alias, { pick })}
-      from ${this.#ident} ${this.#alias}
+      from ${this.#identWithAlias}
       where ${sqlIdent(this.idKey, this.#alias)} = ${id}
       limit 1  
     `;

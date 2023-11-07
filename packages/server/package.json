@@ -7,21 +7,27 @@
         "build": "ncc build -C -s --target es2021 -o dist src/index.ts",
         "build:prod": "ncc build -m -C -s --target es2021 -o dist src/index.ts",
         "lint": "eslint src/**/* --ext js,ts,tsx,jsx",
+        "test": "jest",
         "migrate:reset": "prisma migrate reset",
         "migrate:create": "prisma migrate dev --create-only",
         "migrate": "prisma migrate deploy"
     },
     "devDependencies": {
+        "@types/bcrypt": "^5.0.1",
+        "@types/jest": "^29.5.6",
         "@types/lodash": "^4.14.200",
         "@types/node": "^20.7.0",
         "@types/pg": "^8.10.7",
         "@types/pg-format": "^1.0.4",
         "@vercel/ncc": "^0.38.1",
+        "jest": "^29.7.0",
         "nodemon": "^3.0.1",
         "pino-pretty": "^10.2.3",
+        "ts-jest": "^29.1.1",
         "typescript": "^5.2.2"
     },
     "dependencies": {
+        "bcrypt": "^5.1.1",
         "dotenv": "^16.3.1",
         "fastify": "^4.24.2",
         "lodash": "^4.17.21",
