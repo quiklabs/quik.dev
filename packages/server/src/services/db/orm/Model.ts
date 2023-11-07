@@ -17,16 +17,12 @@ type TModeFilter<M extends Record<string, any>> = Partial<M>;
 
 type TModelBody<M> = Partial<M>;
 
-interface TModelClauseWhereOpts<M extends Record<string, any>> {
-  filter?: TModeFilter<M>;
-}
-
 interface TModelFindByIdOpts<M extends Record<string, any>> {
-  pick?: Array<TColumnName<M>>;
+  cols?: Array<TColumnName<M>>;
 }
 interface TModelFindAllOptions<M extends Record<string, any>> {
   filter?: TModeFilter<M>;
-  pick?: Array<TColumnName<M>>;
+  cols?: Array<TColumnName<M> | string>;
 }
 
 interface TModelInsertOneOptions<M extends Record<string, any>> {
@@ -54,7 +50,7 @@ export class Model<M extends Record<string, any>> {
     this.#identWithAlias = sqlIdent(this.table, this.schema, this.#alias);
   }
 
-  #clauseWhere({ filter = {} }: TModelClauseWhereOpts<M> = {}): SqlStatment {
+  #clauseWhere(filter: Partial<M> = {}): SqlStatment {
     const keys = Object.keys(filter ?? {});
 
     if (keys.length > 0) {
@@ -64,9 +60,9 @@ export class Model<M extends Record<string, any>> {
     return sql``;
   }
 
-  async selectById(id: string, { pick }: TModelFindByIdOpts<M> = {}): Promise<M> {
+  async selectById(id: string, { cols }: TModelFindByIdOpts<M> = {}): Promise<M> {
     const stmt = sql`
-      select ${this.columns.identsWithParent(this.#alias, { pick })}
+      select ${this.columns.identsWithParent(this.#alias, { cols })}
       from ${this.#identWithAlias}
       where ${sqlIdent(this.idKey, this.#alias)} = ${id}
       limit 1  
@@ -79,10 +75,10 @@ export class Model<M extends Record<string, any>> {
     return rows[0];
   }
 
-  async select({ filter, pick }: TModelFindAllOptions<M> = {}): Promise<M[]> {
+  async select({ filter, cols }: TModelFindAllOptions<M> = {}): Promise<M[]> {
     const stmt = sql`
-      select ${this.columns.identsWithParent(this.#alias, { pick })}
-      from ${this.#ident} ${this.#alias}
+      select ${this.columns.identsWithParent(this.#alias, { cols })}
+      from ${this.#identWithAlias}
       ${this.#clauseWhere(filter)}
     `;
 
