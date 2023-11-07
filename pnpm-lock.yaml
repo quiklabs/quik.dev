@@ -132,6 +132,12 @@ importers:
 
   packages/server:
     dependencies:
+      '@fastify/cookie':
+        specifier: ^9.1.0
+        version: 9.1.0
+      '@fastify/session':
+        specifier: ^10.5.0
+        version: 10.5.0
       bcrypt:
         specifier: ^5.1.1
         version: 5.1.1
@@ -2109,6 +2115,13 @@ packages:
       fast-uri: 2.2.0
     dev: false
 
+  /@fastify/cookie@9.1.0:
+    resolution: {integrity: sha512-w/LlQjj7cmYlQNhEKNm4jQoLkFXCL73kFu1Jy3aL7IFbYEojEKur0f7ieCKUxBBaU65tpaWC83UM8xW7AzY6uw==}
+    dependencies:
+      cookie: 0.5.0
+      fastify-plugin: 4.5.1
+    dev: false
+
   /@fastify/deepmerge@1.3.0:
     resolution: {integrity: sha512-J8TOSBq3SoZbDhM9+R/u77hP93gz/rajSA+K2kGyijPpORPWUXHUpTaleoj+92As0S9uPRP7Oi8IqMf0u+ro6A==}
     dev: false
@@ -2121,6 +2134,13 @@ packages:
     resolution: {integrity: sha512-aZAXGYo6m22Fk1zZzEUKBvut/CIIQe/BapEORnxiD5Qr0kPHqqI69NtEMCme74h+at72sPhbkb4ZrLd1W3KRLA==}
     dependencies:
       fast-json-stringify: 5.8.0
+    dev: false
+
+  /@fastify/session@10.5.0:
+    resolution: {integrity: sha512-2oXXSQ4Yy6pzLgbBoooblgHJ55DYqyxSLoKMq2CGmDZI2WPMrOIvN1bJbllWuUuCe7luPdQju3RJTRvNMW+j/g==}
+    dependencies:
+      fastify-plugin: 4.5.1
+      safe-stable-stringify: 2.4.3
     dev: false
 
   /@humanwhocodes/config-array@0.11.11:
@@ -6682,6 +6702,10 @@ packages:
 
   /fast-uri@2.2.0:
     resolution: {integrity: sha512-cIusKBIt/R/oI6z/1nyfe2FvGKVTohVRfvkOhvx0nCEW+xf5NoCXjAHcWp93uOUBchzYcsvPlrapAdX1uW+YGg==}
+    dev: false
+
+  /fastify-plugin@4.5.1:
+    resolution: {integrity: sha512-stRHYGeuqpEZTL1Ef0Ovr2ltazUT9g844X5z/zEBFLG8RYlpDiOCIG+ATvYEp+/zmc7sN29mcIMp8gvYplYPIQ==}
     dev: false
 
   /fastify@4.24.2:

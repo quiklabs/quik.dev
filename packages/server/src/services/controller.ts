@@ -1,5 +1,6 @@
 import type { FastifyInstance, RouteHandlerMethod } from "fastify";
-import type { TRouteMethods } from "./Router";
+
+export type TRouteMethods = "get" | "head" | "post" | "put" | "delete" | "options" | "patch";
 
 interface TRouteDef {
   method: TRouteMethods;
@@ -14,16 +15,15 @@ export class Controller {
     return (target: RouteHandlerMethod, context: ClassMethodDecoratorContext<This>) => {
       if (context.kind === "method") {
         context.addInitializer(function (this: This) {
-          console.log("called", method, pathname);
           this.routeDefs.push({ method, pathname, handler: target });
         });
       }
     };
   }
 
-  load(fastify: FastifyInstance) {
+  async mount(fastify: FastifyInstance) {
     for (const routeDef of this.routeDefs) {
-      fastify[routeDef.method](routeDef.pathname, routeDef.handler);
+      await fastify[routeDef.method](routeDef.pathname, routeDef.handler.bind(fastify)).after();
     }
   }
 }

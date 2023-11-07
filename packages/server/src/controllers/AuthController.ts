@@ -10,7 +10,7 @@ interface TAuthSignupBody {
 }
 
 export class AuthController extends Controller {
-  @Controller.route("post", "/signup")
+  @Controller.route("post", "/auth/signup")
   async signup(request: FastifyRequest, reply: FastifyReply) {
     const { fullname, email, password } = request.body as TAuthSignupBody;
     const hashedPassword = await bcrypt.hash(password, 10);

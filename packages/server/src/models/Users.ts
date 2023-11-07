@@ -5,9 +5,9 @@ export interface IUser {
   id: string;
   fullname: string;
   email: string;
-  hashed_password: string; // should be hidden
-  created_on: Date;
-  updated_on: Date;
+  hashedPassword: string; // should be hidden
+  createdOn: Date;
+  updatedOn: Date;
 }
 
 export const Users = new Model<IUser>({
@@ -18,8 +18,8 @@ export const Users = new Model<IUser>({
     new Column({ name: "id", datatype: "uuid" }),
     new Column({ name: "fullname", datatype: "text" }),
     new Column({ name: "email", datatype: "text" }),
-    new Column({ name: "hashed_password", datatype: "text", hidden: true }),
-    new Column({ name: "created_on", datatype: "timestamptz" }),
-    new Column({ name: "updated_on", datatype: "timestamptz" }),
+    new Column({ name: "hashedPassword", datatype: "text", hidden: true }),
+    new Column({ name: "createdOn", datatype: "timestamptz" }),
+    new Column({ name: "updatedOn", datatype: "timestamptz" }),
   ]),
 });

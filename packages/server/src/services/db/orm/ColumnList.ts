@@ -8,7 +8,6 @@ interface TColumnListIdentsOptions<M extends Record<string, any>> {
 
 interface TColumnListIdentsWithParentOptions<M extends Record<string, any>> {
   pick?: Array<TColumnName<M>>;
-  parent?: string;
 }
 
 export class ColumnList<M extends Record<string, any>> {

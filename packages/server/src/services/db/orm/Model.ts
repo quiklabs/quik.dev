@@ -1,7 +1,7 @@
 import type { Pool, QueryResult } from "pg";
 import type { ColumnList } from "./ColumnList";
 import type { SqlStatment } from "./sql";
-import { sql, sqlIdent, sqlJoin } from "./sql";
+import { sql, sqlIdent, sqlJoin, sqlJoinIdents, sqlJoinLiterals } from "./sql";
 import type { TColumnName } from "./Column";
 
 interface TModelConstructorArgs<M extends Record<string, any>> {
@@ -76,8 +76,7 @@ export class Model<M extends Record<string, any>> {
     const { rows }: QueryResult<M> = await client.query(stmt);
     client.release();
 
-    const user = rows[0];
-    return user;
+    return rows[0];
   }
 
   async select({ filter, pick }: TModelFindAllOptions<M> = {}): Promise<M[]> {
@@ -91,16 +90,15 @@ export class Model<M extends Record<string, any>> {
     const { rows }: QueryResult<M> = await client.query(stmt);
     client.release();
 
-    const users = rows;
-    return users;
+    return rows;
   }
 
   async insertOne({ body }: TModelInsertOneOptions<M>) {
     const colNames = Object.keys(body) as Array<TColumnName<M>>;
     const values = Object.values(body);
     const stmt = sql`
-      insert into ${this.#ident} (${this.columns.idents({ pick: colNames })})
-      values ${values}
+      insert into ${this.#ident} (${sqlJoinIdents(colNames)})
+      values (${sqlJoinLiterals(values)})
       returning *
     `;
 
@@ -108,7 +106,11 @@ export class Model<M extends Record<string, any>> {
     const { rows }: QueryResult<M> = await client.query(stmt);
     client.release();
 
-    const user = rows[0];
-    return user;
+    const row = this.columns.names().reduce((acc: Partial<M>, colName) => {
+      acc[colName] = rows[0][colName];
+      return acc;
+    }, {}) as M;
+
+    return row;
   }
 }
