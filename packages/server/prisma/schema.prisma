@@ -6,11 +6,11 @@ datasource db {
 model Users {
   id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
-  fullname        String
-  email           String   @unique
-  hashed_password String
-  created_on      DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
-  updated_on      DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+  fullname       String
+  email          String   @unique
+  hashedPassword String
+  createdOn      DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+  updatedOn      DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
 
   workspaces WorkspaceUsers[]
 
@@ -20,10 +20,10 @@ model Users {
 model Workspaces {
   id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
-  name       String
-  slug       String   @unique
-  created_on DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
-  updated_on DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+  name      String
+  slug      String   @unique
+  createdOn DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+  updatedOn DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
 
   users    WorkspaceUsers[]
   projects WorkspaceProjects[]
@@ -34,25 +34,25 @@ model Workspaces {
 model WorkspaceUsers {
   id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
-  workspace_id String   @db.Uuid
-  user_id      String   @db.Uuid
-  created_on   DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
-  updated_on   DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+  workspaceId String   @db.Uuid
+  userId      String   @db.Uuid
+  createdOn   DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+  updatedOn   DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
 
-  workspace Workspaces @relation(fields: [workspace_id], references: [id])
-  user      Users      @relation(fields: [user_id], references: [id])
+  workspace Workspaces @relation(fields: [workspaceId], references: [id])
+  user      Users      @relation(fields: [userId], references: [id])
 
-  @@unique([user_id, workspace_id])
-  @@map("workspace_users")
+  @@unique([userId, workspaceId])
+  @@map("workspaceUsers")
 }
 
 model Projects {
   id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
-  name       String
-  slug       String   @unique
-  created_on DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
-  updated_on DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+  name      String
+  slug      String   @unique
+  createdOn DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+  updatedOn DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
 
   workspace WorkspaceProjects[]
 
@@ -62,14 +62,14 @@ model Projects {
 model WorkspaceProjects {
   id String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
 
-  workspace_id String   @db.Uuid
-  project_id   String   @db.Uuid
-  created_on   DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
-  updated_on   DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+  workspaceId String   @db.Uuid
+  projectId   String   @db.Uuid
+  createdOn   DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
+  updatedOn   DateTime @default(dbgenerated("now()")) @db.Timestamptz(3)
 
-  workspace Workspaces @relation(fields: [workspace_id], references: [id])
-  project   Projects   @relation(fields: [project_id], references: [id])
+  workspace Workspaces @relation(fields: [workspaceId], references: [id])
+  project   Projects   @relation(fields: [projectId], references: [id])
 
-  @@unique([project_id, workspace_id])
-  @@map("workspace_projects")
+  @@unique([projectId, workspaceId])
+  @@map("workspaceProjects")
 }

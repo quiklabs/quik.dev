@@ -1,19 +1,39 @@
-import type { FastifyInstance, RouteHandlerMethod } from "fastify";
+import type { FastifyInstance, preHandlerAsyncHookHandler } from "fastify";
+import type { Controller } from "./Controller";
 
-type Methods = "get" | "head" | "post" | "put" | "delete" | "options" | "patch";
-
-interface IRouterConstructorArgs {
-  fastify: FastifyInstance;
-}
 export class Router {
-  fastify;
+  fastify: FastifyInstance;
 
-  constructor({ fastify }: IRouterConstructorArgs) {
+  private constructor(fastify: FastifyInstance) {
     this.fastify = fastify;
   }
 
-  addRoute(method: Methods, path: string, controller: RouteHandlerMethod) {
-    this.fastify.log.debug(`registering route [${method}] ${this.fastify.prefix}${path}`);
-    this.fastify[method](path, controller);
+  static async mount(fastify: FastifyInstance, prefix?: string) {
+    const scopedFastify = await new Promise<FastifyInstance>((resolve) => {
+      fastify
+        .register(
+          async (f) => {
+            resolve(f);
+          },
+          { prefix },
+        )
+        .after();
+    });
+    fastify.log.debug(`registered router: ${prefix}`);
+    return new Router(scopedFastify);
+  }
+
+  async registerController(controller: Controller) {
+    for (const routeDef of controller.routeDefs) {
+      await this.fastify[routeDef.method](routeDef.pathname, routeDef.handler.bind(this.fastify)).after();
+      this.fastify.log.debug(
+        `registered route: ${routeDef.method} ${routeDef.pathname} -> ${controller.constructor.name}.${routeDef.handler.name}`,
+      );
+    }
+  }
+
+  async registerMiddleware(middleware: preHandlerAsyncHookHandler) {
+    await this.fastify.addHook("preHandler", middleware.bind(this.fastify)).after();
+    this.fastify.log.debug(`registered middleware: ${middleware.name}`);
   }
 }

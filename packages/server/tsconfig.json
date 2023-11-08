@@ -1,9 +1,10 @@
 {
   "include": ["src"],
   "compilerOptions": {
-    // target
-    "target": "es2016",
-    "module": "commonjs",
+    "lib": ["ES2022"],
+    "target": "ES2022",
+    "module": "ES6",
+    "moduleResolution": "Bundler",
     "sourceMap": true,
     // "inlineSourceMap": true,
     // "inlineSources": true,
@@ -17,5 +18,12 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
+  },
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS",
+      "sourceMap": true,
+      "inlineSources": true
+    }
   }
 }
