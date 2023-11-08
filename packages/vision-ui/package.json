@@ -1,0 +1,24 @@
+{
+    "name": "@quik/vision-ui",
+    "version": "0.0.1",
+    "description": "Vision UI by MUI",
+    "main": "index.js",
+    "license": "MIT",
+    "dependencies": {
+        "@emotion/cache": "11.4.0",
+        "@emotion/react": "^11.11.1",
+        "@emotion/styled": "^11.11.0",
+        "@mui/icons-material": "5.1.1",
+        "@mui/material": "^5.14.15",
+        "@mui/styled-engine": "5.1.1",
+        "@mui/styles": "^5.14.15",
+        "chroma-js": "^2.4.2",
+        "prop-types": "^15.8.1"
+    },
+    "devDependencies": {
+        "react": "^18.2.0"
+    },
+    "peerDependencies": {
+        "react": "^18.2.0"
+    }
+}
