@@ -1,10 +1,8 @@
 
 
-// Vision UI Dashboard React Base Styles
 import typography from "../../base/typography";
 import borders from "../../base/borders";
 
-// Vision UI Dashboard React Helper Functions
 import pxToRem from "../../functions/pxToRem";
 
 const { fontWeightBold, size } = typography;

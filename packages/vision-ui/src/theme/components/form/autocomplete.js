@@ -1,12 +1,10 @@
 
 
-// Vision UI Dashboard React base styles
 import boxShadows from "../../base/boxShadows";
 import typography from "../../base/typography";
 import colors from "../../base/colors";
 import borders from "../../base/borders";
 
-// Vision UI Dashboard React helper functions
 import pxToRem from "../../functions/pxToRem";
 
 const { lg } = boxShadows;

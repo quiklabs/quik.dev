@@ -1,8 +1,6 @@
 
-// Vision UI Dashboard React Base Styles
 import colors from "../base/colors";
 
-// Vision UI Dashboard React Helper Functions
 import boxShadow from "../functions/boxShadow";
 
 const { black, white, info, inputColors, tabs } = colors;

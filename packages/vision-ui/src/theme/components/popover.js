@@ -1,9 +1,7 @@
 
 
-// Vision UI Dashboard React helper functions
 import pxToRem from "../functions/pxToRem";
 
-// Vision UI Dashboard React base styles
 import colors from "../base/colors";
 import boxShadows from "../base/boxShadows";
 import borders from "../base/borders";

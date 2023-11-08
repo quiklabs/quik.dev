@@ -14,3 +14,8 @@ export { default as themeRTL } from "./src/theme/theme-rtl";
 
 export { ThemeProvider } from "@mui/material/styles";
 export { default as CssBaseline } from "@mui/material/CssBaseline";
+
+export { default as SignIn } from "./src/layouts/authentication/sign-in";
+export { default as SignUp } from "./src/layouts/authentication/sign-up";
+
+export { VisionUIControllerProvider } from "./src/context";

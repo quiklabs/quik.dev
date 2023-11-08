@@ -1,6 +1,5 @@
 
 
-// Vision UI Dashboard React Helper Functions
 import pxToRem from "../../functions/pxToRem";
 
 export default {

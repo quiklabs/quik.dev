@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 // @mui material components
 import Fade from "@mui/material/Fade";
 
-// Vision UI Dashboard React components
 import VuiBox from "../VuiBox";
 
 // Custom styles for the VuiAlert

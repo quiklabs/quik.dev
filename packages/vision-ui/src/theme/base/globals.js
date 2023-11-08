@@ -1,6 +1,5 @@
 
 
-// Vision UI Dashboard React Base Styles
 import colors from "../base/colors";
 import bgAdmin from "../../assets/body-background.png";
 

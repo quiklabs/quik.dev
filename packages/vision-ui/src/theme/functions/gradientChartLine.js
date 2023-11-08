@@ -1,5 +1,4 @@
 
-// Vision UI Dashboard React helper functions
 import rgba from "../functions/rgba";
 
 function gradientChartLine(chart, color, opacity = 0.2) {

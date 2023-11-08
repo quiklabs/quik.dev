@@ -11,7 +11,6 @@ import VuiInputWithIconRoot from "../VuiInput/VuiInputWithIconRoot";
 import VuiInputIconBoxRoot from "../VuiInput/VuiInputIconBoxRoot";
 import VuiInputIconRoot from "../VuiInput/VuiInputIconRoot";
 
-// Vision UI Dashboard React contexts
 import { useVisionUIController } from "../../context";
 
 const VuiInput = forwardRef(({ size, icon, error, success, disabled, ...rest }, ref) => {
