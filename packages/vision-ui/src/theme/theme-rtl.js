@@ -3,7 +3,6 @@
 // @mui material components
 import { createTheme } from "@mui/material/styles";
 
-
 import colors from "./base/colors";
 import breakpoints from "./base/breakpoints";
 import typography from "./base/typography";

@@ -3,32 +3,39 @@
     "version": "0.0.1",
     "main": "dist/index.js",
     "scripts": {
-        "start": "pnpm run build:watch & node --watch dist/index.js",
-        "start:prod": "node dist/index.js",
-        "build": "ncc build -s -o dist src/index.ts",
-        "build:watch": "ncc build -w -s -o dist src/index.ts",
-        "build:prod": "ncc build -s -m -C -o dist src/index.ts ",
+        "start": "nodemon --watch \"src/**/*\" -e ts,json --exec \"pnpm run build && node --inspect dist/index.js\" | pino-pretty",
+        "build": "ncc build -C -s --target es2021 -o dist src/index.ts",
+        "build:prod": "ncc build -m -C -s --target es2021 -o dist src/index.ts",
         "lint": "eslint src/**/* --ext js,ts,tsx,jsx",
+        "test": "jest",
         "migrate:reset": "prisma migrate reset",
         "migrate:create": "prisma migrate dev --create-only",
         "migrate": "prisma migrate deploy"
     },
     "devDependencies": {
+        "@types/bcrypt": "^5.0.1",
+        "@types/jest": "^29.5.6",
+        "@types/lodash": "^4.14.200",
         "@types/node": "^20.7.0",
         "@types/pg": "^8.10.7",
         "@types/pg-format": "^1.0.4",
         "@vercel/ncc": "^0.38.1",
+        "jest": "^29.7.0",
         "nodemon": "^3.0.1",
         "pino-pretty": "^10.2.3",
+        "ts-jest": "^29.1.1",
         "typescript": "^5.2.2"
     },
     "dependencies": {
+        "@fastify/cookie": "^9.1.0",
+        "@fastify/session": "^10.5.0",
+        "bcrypt": "^5.1.1",
         "dotenv": "^16.3.1",
         "fastify": "^4.24.2",
+        "lodash": "^4.17.21",
         "pg": "^8.11.3",
         "pg-format": "^1.0.4",
         "pino": "^8.16.0",
-        "prisma": "^5.4.2",
-        "typia": "^5.2.3"
+        "prisma": "^5.4.2"
     }
 }

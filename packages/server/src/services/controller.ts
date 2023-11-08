@@ -1,30 +1,29 @@
-import type { FastifyInstance } from "fastify";
-import type { Model } from "../services/db/orm";
+import type { FastifyInstance, RouteHandlerMethod } from "fastify";
 
-interface TControllersContructorArgs<IModelDef extends Record<string, any>> {
-  fastify: FastifyInstance;
-  model: Model<IModelDef>;
+export type TRouteMethods = "get" | "head" | "post" | "put" | "delete" | "options" | "patch";
+
+interface TRouteDef {
+  method: TRouteMethods;
+  pathname: string;
+  handler: RouteHandlerMethod;
 }
 
-export class BaseControllers<IModelDef extends Record<string, any>> {
-  fastify;
-  model;
+export class Controller {
+  routeDefs: TRouteDef[] = [];
 
-  constructor({ model, fastify }: TControllersContructorArgs<IModelDef>) {
-    this.fastify = fastify;
-    this.model = model;
+  static route<This extends Controller>(method: TRouteMethods, pathname: string) {
+    return (target: RouteHandlerMethod, context: ClassMethodDecoratorContext<This>) => {
+      if (context.kind === "method") {
+        context.addInitializer(function (this: This) {
+          this.routeDefs.push({ method, pathname, handler: target });
+        });
+      }
+    };
   }
-}
 
-export class GenericControllers<IModelDef extends Record<string, any>> extends BaseControllers<IModelDef> {
-  // ! arrow functions only otherwise it will create binding issues with fastify
-  getById = async () => {
-    const user = await this.model.findOne();
-    return user;
-  };
-
-  getList = async () => {
-    const user = await this.model.findAll();
-    return user;
-  };
+  async mount(fastify: FastifyInstance) {
+    for (const routeDef of this.routeDefs) {
+      await fastify[routeDef.method](routeDef.pathname, routeDef.handler.bind(fastify)).after();
+    }
+  }
 }
