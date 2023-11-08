@@ -1,11 +1,9 @@
 
 
-// Vision UI Dashboard React base styles
 import colors from "../../base/colors";
 import borders from "../../base/borders";
 import boxShadows from "../../base/boxShadows";
 
-// Vision UI Dashboard React helper functions
 import rgba from "../../functions/rgba";
 import pxToRem from "../../functions/pxToRem";
 import linearGradient from "../../functions/linearGradient";

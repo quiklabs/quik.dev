@@ -1,9 +1,7 @@
 
 
-// Vision UI Dashboard React Base Styles
 import colors from "../base/colors";
 
-// Vision UI Dashboard React Helper Functions
 import pxToRem from "../functions/pxToRem";
 
 const { borderCol } = colors;

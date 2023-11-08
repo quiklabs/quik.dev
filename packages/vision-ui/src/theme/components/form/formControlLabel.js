@@ -1,10 +1,8 @@
 
 
-// Vision UI Dashboard React base styles
 import colors from "../../base/colors";
 import typography from "../../base/typography";
 
-// Vision UI Dashboard React helper functions
 import pxToRem from "../../functions/pxToRem";
 
 const { dark } = colors;

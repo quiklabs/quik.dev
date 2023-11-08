@@ -1,9 +1,7 @@
 
 
-// Vision UI Dashboard React base styles
 import breakpoints from "../base/breakpoints";
 
-// Vision UI Dashboard React helper functions
 import pxToRem from "../functions/pxToRem";
 
 const {

@@ -3,7 +3,6 @@
 // @mui material components
 import { createTheme } from "@mui/material/styles";
 
-// Vision UI Dashboard React base styles
 import colors from "./base/colors";
 import breakpoints from "./base/breakpoints";
 import typography from "./base/typography";
@@ -11,14 +10,12 @@ import boxShadows from "./base/boxShadows";
 import borders from "./base/borders";
 import globals from "./base/globals";
 
-// Vision UI Dashboard React helper functions
 import boxShadow from "./functions/boxShadow";
 import hexToRgb from "./functions/hexToRgb";
 import linearGradient from "./functions/linearGradient";
 import pxToRem from "./functions/pxToRem";
 import rgba from "./functions/rgba";
 
-// Vision UI Dashboard React components base styles for @mui material components
 import sidenav from "./components/sidenav";
 import list from "./components/list";
 import listItem from "./components/list/listItem";

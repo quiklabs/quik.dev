@@ -1,6 +1,5 @@
 
 
-// Vision UI Dashboard React Button Styles
 import root from "../../components/button/root";
 import contained from "../../components/button/contained";
 import outlined from "../../components/button/outlined";

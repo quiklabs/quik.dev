@@ -1,4 +1,3 @@
-// Vision UI Dashboard React helper functions
 import rgba from "../functions/rgba";
 import pxToRem from "../functions/pxToRem";
 

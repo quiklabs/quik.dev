@@ -1,9 +1,7 @@
 
 
-// Vision UI Dashboard React base styles
 import colors from "../../base/colors";
 
-// Vision UI Dashboard React helper functions
 import pxToRem from "../../functions/pxToRem";
 
 const { transparent } = colors;

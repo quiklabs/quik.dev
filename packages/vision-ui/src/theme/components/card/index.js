@@ -1,12 +1,10 @@
 
 
-// Vision UI Dashboard React Base Styles
 import colors from "../../base/colors";
 import linearGradient from "../../functions/linearGradient";
 import borders from "../../base/borders";
 import boxShadows from "../../base/boxShadows";
 
-// Vision UI Dashboard React Helper Function
 import rgba from "../../functions/rgba";
 
 const { black, gradients } = colors;
