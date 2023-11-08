@@ -1,11 +1,7 @@
-import {
-  ThemeProvider,
-  CssBaseline,
-  theme,
-  SignIn,
-  SignUp,
-} from "@quik/vision-ui";
+import { ThemeProvider, CssBaseline, theme } from "@quik/vision-ui";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import SignIn from "./components/SignIn";
+import SignUp from "./components/SignUp";
 export default function App() {
   return (
     <ThemeProvider theme={theme}>

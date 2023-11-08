@@ -2,25 +2,27 @@ import { useState } from "react";
 
 import { Link } from "react-router-dom";
 
-import VuiBox from "../../../components/VuiBox";
-import VuiTypography from "../../../components/VuiTypography";
-import VuiInput from "../../../components/VuiInput";
-import VuiButton from "../../../components/VuiButton";
-import VuiSwitch from "../../../components/VuiSwitch";
-import GradientBorder from "../../../examples/GradientBorder";
+import {
+  VuiBox,
+  VuiTypography,
+  VuiInput,
+  VuiButton,
+  VuiSwitch,
+  GradientBorder,
+  radialGradient,
+  palette,
+  borders,
+  CoverLayout,
+} from "@quik/vision-ui";
 
-import radialGradient from "../../../theme/functions/radialGradient";
-import palette from "../../../theme/base/colors";
-import borders from "../../../theme/base/borders";
-
-import CoverLayout from "../components/CoverLayout";
-
-import bgSignIn from "../../../assets/signInImage.png";
+import bgSignIn from "@quik/vision-ui/src/assets/signInImage.png";
 
 function SignIn() {
   const [rememberMe, setRememberMe] = useState(true);
 
-  const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const handleSetRememberMe = () => {
+    setRememberMe(!rememberMe);
+  };
 
   return (
     <CoverLayout
@@ -34,7 +36,12 @@ function SignIn() {
       <VuiBox component="form" role="form">
         <VuiBox mb={2}>
           <VuiBox mb={1} ml={0.5}>
-            <VuiTypography component="label" variant="button" color="white" fontWeight="medium">
+            <VuiTypography
+              component="label"
+              variant="button"
+              color="white"
+              fontWeight="medium"
+            >
               Email
             </VuiTypography>
           </VuiBox>
@@ -45,15 +52,24 @@ function SignIn() {
             backgroundImage={radialGradient(
               palette.gradients.borderLight.main,
               palette.gradients.borderLight.state,
-              palette.gradients.borderLight.angle
+              palette.gradients.borderLight.angle,
             )}
           >
-            <VuiInput type="email" placeholder="Your email..." fontWeight="500" />
+            <VuiInput
+              type="email"
+              placeholder="Your email..."
+              fontWeight="500"
+            />
           </GradientBorder>
         </VuiBox>
         <VuiBox mb={2}>
           <VuiBox mb={1} ml={0.5}>
-            <VuiTypography component="label" variant="button" color="white" fontWeight="medium">
+            <VuiTypography
+              component="label"
+              variant="button"
+              color="white"
+              fontWeight="medium"
+            >
               Password
             </VuiTypography>
           </VuiBox>
@@ -64,20 +80,24 @@ function SignIn() {
             backgroundImage={radialGradient(
               palette.gradients.borderLight.main,
               palette.gradients.borderLight.state,
-              palette.gradients.borderLight.angle
+              palette.gradients.borderLight.angle,
             )}
           >
             <VuiInput
               type="password"
               placeholder="Your password..."
-              sx={({ typography: { size } }) => ({
+              sx={({ typography: { size } }: { typography: any }) => ({
                 fontSize: size.sm,
               })}
             />
           </GradientBorder>
         </VuiBox>
         <VuiBox display="flex" alignItems="center">
-          <VuiSwitch color="info" checked={rememberMe} onChange={handleSetRememberMe} />
+          <VuiSwitch
+            color="info"
+            checked={rememberMe}
+            onChange={handleSetRememberMe}
+          />
           <VuiTypography
             variant="caption"
             color="white"

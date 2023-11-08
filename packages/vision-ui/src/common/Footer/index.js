@@ -9,8 +9,8 @@ import PinterestIcon from "@mui/icons-material/Pinterest";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
  
-import VuiBox from "../../../../components/VuiBox";
-import VuiTypography from "../../../../components/VuiTypography";
+import VuiBox from "../../components/VuiBox";
+import VuiTypography from "../../components/VuiTypography";
 
 function Footer() {
   return (

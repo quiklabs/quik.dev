@@ -3,11 +3,11 @@ import PropTypes from "prop-types";
 
 import Grid from "@mui/material/Grid";
 
-import VuiBox from "../../../../components/VuiBox";
-import VuiTypography from "../../../../components/VuiTypography";
+import VuiBox from "../../components/VuiBox";
+import VuiTypography from "../../components/VuiTypography";
 
-import DefaultNavbar from "../../../../examples/Navbars/DefaultNavbar";
-import PageLayout from "../../../../examples/LayoutContainers/PageLayout";
+import DefaultNavbar from "../../examples/Navbars/DefaultNavbar";
+import PageLayout from "../../examples/LayoutContainers/PageLayout";
 
 import Footer from "../Footer";
 

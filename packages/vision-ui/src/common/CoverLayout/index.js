@@ -2,18 +2,18 @@
 import PropTypes from "prop-types";
 
  
-import VuiBox from "../../../../components/VuiBox";
-import VuiTypography from "../../../../components/VuiTypography";
+import VuiBox from "../../components/VuiBox";
+import VuiTypography from "../../components/VuiTypography";
 
-import DefaultNavbar from "../../../../examples/Navbars/DefaultNavbar";
-import PageLayout from "../../../../examples/LayoutContainers/PageLayout";
+import DefaultNavbar from "../../examples/Navbars/DefaultNavbar";
+import PageLayout from "../../examples/LayoutContainers/PageLayout";
 
 // Authentication layout components
-import Footer from "../../components/Footer";
+import Footer from "../Footer";
 
-import colors from "../../../../theme/base/colors";
+import colors from "../../theme/base/colors";
 
-import tripleLinearGradient from "../../../../theme/functions/tripleLinearGradient";
+import tripleLinearGradient from "../../theme/functions/tripleLinearGradient";
 
 function CoverLayout({
   color,
