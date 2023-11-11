@@ -36,7 +36,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: [".eslintrc.js"],
+      files: [".eslintrc.js", "craco.config.js"],
       extends: ["plugin:@typescript-eslint/disable-type-checked"],
       parserOptions: {
         sourceType: "module",
