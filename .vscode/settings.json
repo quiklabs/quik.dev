@@ -1,17 +1,31 @@
 {
+
+  // editor
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   },
   "editor.tabSize": 2,
-  "eslint.workingDirectories": [
-    {
-      "mode": "auto"
-    }
-  ],
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+  
+  // files
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  
+  // debug
   "debug.javascript.autoAttachFilter": "onlyWithFlag",
   "debug.javascript.terminalOptions": {
     "skipFiles": [
       "<node_internals>/**"
     ]
-  }
+  },
+  
+  // eslint 
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
 }
